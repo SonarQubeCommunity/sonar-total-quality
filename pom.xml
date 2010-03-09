@@ -9,7 +9,7 @@
 
 	<properties>
 		<sonar.plugin.class>org.sonar.plugins.tq.TQPlugin</sonar.plugin.class>
-		<sonar.version>2.0-SNAPSHOT</sonar.version>
+		<sonar.version>2.0RC3</sonar.version>
 	</properties>
 
 	<dependencies>

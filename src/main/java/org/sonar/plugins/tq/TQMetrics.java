@@ -21,11 +21,16 @@ package org.sonar.plugins.tq;
 
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.measures.Metrics;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 
 /** Metrics for TQ plugin. */
@@ -93,7 +98,7 @@ public final class TQMetrics implements Metrics {
 
 	public static final String TQ_ARCHITECTURE_ADI_KEY = "tq-architecture-adi";
 	public static final Metric TQ_ARCHITECTURE_ADI = new Metric("isoqa_architecture_adi", "Architecture Distance",
-		"ADI from " + /*CoreMetrics.DISTANCE_KEY +*/ " gt value (20 default)", Metric.ValueType.PERCENT,
+		"ADI from " + CoreMetrics.DISTANCE_KEY + " gt value (20 default)", Metric.ValueType.PERCENT,
 		Metric.DIRECTION_BETTER, true, DOMAIN_ARCHITECTURE);
 
 	public static final String TQ_ARCHITECTURE_KEY = "tq-architecture";
@@ -106,4 +111,25 @@ public final class TQMetrics implements Metrics {
 			TQ_DESIGN_DIT, TQ_DESIGN_LCOM, TQ_DESIGN, TQ_ARCHITECTURE_ADI, TQ_ARCHITECTURE_COH, TQ_ARCHITECTURE);
 	}
 
+	public static final Map<String, Metric> formulaParams = ImmutableMap.<String, Metric>builder()
+		.put("ARCH",   TQ_ARCHITECTURE)
+		.put("DESIGN", TQ_DESIGN)
+		.put("CODE",   TQ_CODE)
+		.put("TESTS",  TQ_TS)
+		.put("NOM",    TQ_DESIGN_NOM)
+		.put("LCOM",   TQ_DESIGN_LCOM)
+		.put("RFC",    TQ_DESIGN_RFC)
+		.put("CBO",    TQ_DESIGN_CBO)
+		.put("DIT",    TQ_DESIGN_DIT)
+		.put("COH",    TQ_ARCHITECTURE_COH)
+		.put("ADI",    TQ_ARCHITECTURE_ADI)
+		.put("COV",    CoreMetrics.COVERAGE)
+		.put("LINE",   CoreMetrics.BRANCH_COVERAGE)
+		.put("BRAN",   CoreMetrics.LINE_COVERAGE)
+		.put("DOC",    CoreMetrics.PUBLIC_DOCUMENTED_API_DENSITY)
+		.put("RULES",  CoreMetrics.VIOLATIONS_DENSITY)
+		.put("DRY",    TQ_DRY)
+		.build();
+	
+	
 }

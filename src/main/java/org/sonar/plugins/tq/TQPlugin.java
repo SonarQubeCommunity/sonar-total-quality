@@ -87,6 +87,13 @@ public class TQPlugin implements Plugin {
 		list.add(DesignLCOMDecorator.class);
 		list.add(DesignNOMDecorator.class);
 		list.add(DesignRFCDecorator.class);
+		list.add(ArchitectureDecorator.class);
+		list.add(CodeDecorator.class);
+		list.add(DesignDecorator.class);
+		list.add(TestDecorator.class);
+		list.add(TotalQualityDecorator.class);
+		list.add(ArchitectureADIDecorator.class);
+		list.add(ArchitectureCOHDecorator.class);
 		
 		return list;
 	}

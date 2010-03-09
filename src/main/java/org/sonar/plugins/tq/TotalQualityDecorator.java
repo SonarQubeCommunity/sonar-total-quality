@@ -30,26 +30,25 @@ import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
 
-public class DesignDecorator extends AbstractFormulaBasedDecorator {
+public class TotalQualityDecorator extends AbstractFormulaBasedDecorator {
 
 	@DependedUpon
 	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_DESIGN);
+		return Arrays.asList(TQMetrics.TQ_TOTAL_QUALITY);
 	}
 
 	@DependsUpon
 	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(TQMetrics.TQ_DESIGN_CBO, TQMetrics.TQ_DESIGN_DIT, TQMetrics.TQ_DESIGN_LCOM,
-			TQMetrics.TQ_DESIGN_NOM, TQMetrics.TQ_DESIGN_RFC);
+		return Arrays.asList(TQMetrics.TQ_ARCHITECTURE, TQMetrics.TQ_DESIGN, TQMetrics.TQ_CODE, TQMetrics.TQ_TS);
 	}
 
 	public void decorate(Resource resource, DecoratorContext context) {
-		final String line = context.getProject().getConfiguration().getString(TQPlugin.TQ_DESIGN_FORMULA,
-			TQPlugin.TQ_DESIGN_FORMULA_DEFAULT);
+		final String line = context.getProject().getConfiguration().getString(TQPlugin.TQ_TQ_FORMULA,
+			TQPlugin.TQ_TQ_FORMULA_DEFAULT);
 
 		final Double value = solve(context, line);
 		
-		context.saveMeasure(TQMetrics.TQ_DESIGN, value);
+		context.saveMeasure(TQMetrics.TQ_TOTAL_QUALITY, value);
 	}
 
 }
