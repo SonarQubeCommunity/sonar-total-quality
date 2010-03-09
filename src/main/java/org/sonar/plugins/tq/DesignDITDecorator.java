@@ -49,11 +49,11 @@ public class DesignDITDecorator extends AbstractDesignDecorator {
 		final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE,
 			Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
 
-		final double lcom = doFileDecoration(resource, context, CoreMetrics.DEPTH_IN_TREE, aceleration, context
+		final double dit = doFileDecoration(resource, context, CoreMetrics.DEPTH_IN_TREE, aceleration, context
 			.getProject().getConfiguration().getDouble(TQPlugin.TQ_DESIGN_DIT,
 				Double.parseDouble(TQPlugin.TQ_DESIGN_DIT_DEFAULT)));
 		
-		context.saveMeasure(TQMetrics.TQ_DESIGN_CBO, lcom);
+		context.saveMeasure(TQMetrics.TQ_DESIGN_DIT, dit);
 	}
 
 }

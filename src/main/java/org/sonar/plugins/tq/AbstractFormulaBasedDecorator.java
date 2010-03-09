@@ -22,6 +22,8 @@ package org.sonar.plugins.tq;
 
 import org.sonar.api.batch.Decorator;
 import org.sonar.api.batch.DecoratorContext;
+import org.sonar.api.measures.Measure;
+import org.sonar.api.measures.MeasureUtils;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
@@ -31,16 +33,19 @@ public abstract class AbstractFormulaBasedDecorator implements Decorator {
 
 	protected Double solve(DecoratorContext context, String formula) {
 		double sum = 0;
-		
+
 		final String[] params = formula.split(" ");
-		for (int i=0; i<params.length; i++) {
+		for (int i = 0; i < params.length; i++) {
 			final String[] param = params[i].split("=");
-			final Metric metric = TQMetrics.formulaParams.get(param[0]); 
+			final Metric metric = TQMetrics.formulaParams.get(param[0]);
 			final Double mod = Double.parseDouble(param[1]);
-			final double value = context.getMeasure(metric).getValue().doubleValue() * mod.doubleValue();
-			sum = sum + value;
+			final Measure measure = context.getMeasure(metric);
+			if (MeasureUtils.hasValue(measure)) {
+				final double value = measure.getValue().doubleValue() * mod.doubleValue();
+				sum = sum + value;
+			}
 		}
-		
+
 		return Double.valueOf(sum);
 	}
 

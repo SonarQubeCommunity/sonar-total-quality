@@ -52,8 +52,6 @@ public class DesignLCOMDecorator extends AbstractDesignDecorator {
 		final double lcom = doFileDecoration(resource, context, CoreMetrics.LCOM4, aceleration, context
 			.getProject().getConfiguration().getDouble(TQPlugin.TQ_DESIGN_LCOM,
 				Double.parseDouble(TQPlugin.TQ_DESIGN_LCOM_DEFAULT)));
-
-
 		
 		context.saveMeasure(TQMetrics.TQ_DESIGN_LCOM, lcom);
 	}

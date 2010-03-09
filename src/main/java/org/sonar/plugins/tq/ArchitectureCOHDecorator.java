@@ -58,11 +58,7 @@ public class ArchitectureCOHDecorator extends AbstractBaseDecorator {
 	private void doDecoration(Resource resource, DecoratorContext context, Metric metric) {
 		final Measure measure = context.getMeasure(metric);
 
-		if (!MeasureUtils.hasValue(measure)) {
-			return;
-		}
-		
-		final double cycles = measure.getValue();
+		final double cycles = MeasureUtils.hasValue(measure) ? measure.getValue() : 0;
 		final double res = cycles > 0 ? 0 : 1;
 		
 		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_COH, ParsingUtils.scaleValue(res * 100, 2));

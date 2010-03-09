@@ -49,11 +49,11 @@ public class DesignCBODecorator extends AbstractDesignDecorator {
 		final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE,
 			Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
 
-		final double lcom = doFileDecoration(resource, context, CoreMetrics.EFFERENT_COUPLINGS, aceleration, context
+		final double cbo = doFileDecoration(resource, context, CoreMetrics.EFFERENT_COUPLINGS, aceleration, context
 			.getProject().getConfiguration().getDouble(TQPlugin.TQ_DESIGN_CBO,
 				Double.parseDouble(TQPlugin.TQ_DESIGN_CBO_DEFAULT)));
 		
-		context.saveMeasure(TQMetrics.TQ_DESIGN_CBO, lcom);
+		context.saveMeasure(TQMetrics.TQ_DESIGN_CBO, cbo);
 	}
 
 }

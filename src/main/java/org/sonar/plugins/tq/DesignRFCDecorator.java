@@ -49,11 +49,11 @@ public class DesignRFCDecorator extends AbstractDesignDecorator {
 		final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE,
 			Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
 
-		final double lcom = doFileDecoration(resource, context, CoreMetrics.RFC, aceleration, context
+		final double rfc = doFileDecoration(resource, context, CoreMetrics.RFC, aceleration, context
 			.getProject().getConfiguration().getDouble(TQPlugin.TQ_DESIGN_RFC,
 				Double.parseDouble(TQPlugin.TQ_DESIGN_RFC_DEFAULT)));
 		
-		context.saveMeasure(TQMetrics.TQ_DESIGN_RFC, lcom);
+		context.saveMeasure(TQMetrics.TQ_DESIGN_RFC, rfc);
 	}
 
 }
