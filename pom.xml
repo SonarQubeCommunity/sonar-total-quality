@@ -11,8 +11,8 @@
 	
 	<artifactId>sonar-total-quality-plugin</artifactId>
 	<name>Sonar Total Quality Plugin</name>
-	<version>2.0.0-SNAPSHOT</version>
-	<description>Sonar MetricsAnalytics Plugin Fork</description>
+	<version>1.0-SNAPSHOT</version>
+	<description>Sonar MetricsAnalytics Plugin Fork (rewritten from scratch). LGPL3.</description>
 
 	<properties>
 		<sonar.plugin.class>org.sonar.plugins.tq.TQPlugin</sonar.plugin.class>
