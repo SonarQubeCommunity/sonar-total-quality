@@ -51,7 +51,7 @@ public class TQPlugin implements Plugin {
 	public static final String TQ_DESIGN_NOM_CLASS_COMPLEXITY = "tq.design.nom.class.complexity";
 	public static final String TQ_DESIGN_NOM_CLASS_COMPLEXITY_DEFAULT = "12.0";
 	public static final String TQ_DESIGN_LCOM = "tq.design.lcom";
-	public static final String TQ_DESIGN_LCOM_DEFAULT = "50.0";
+	public static final String TQ_DESIGN_LCOM_DEFAULT = "1.0";
 	public static final String TQ_DESIGN_RFC = "tq.design.rfc";
 	public static final String TQ_DESIGN_RFC_DEFAULT = "50.0";
 	public static final String TQ_DESIGN_CBO = "tq.design.cbo";
@@ -67,7 +67,8 @@ public class TQPlugin implements Plugin {
 	public static final String TQ_DESIGN_FORMULA = "tq.design.formula";
 	public static final String TQ_DESIGN_FORMULA_DEFAULT = "NOM=0.15 LCOM=0.15 RFC=0.25 CBO=0.25 DIT=0.20";
 	public static final String TQ_ARCH_FORMULA = "tq.architecture.formula";
-	public static final String TQ_ARCH_FORMULA_DEFAULT = "COH=0.50 ADI=0.50";
+//	public static final String TQ_ARCH_FORMULA_DEFAULT = "COH=0.50 ADI=0.50";
+	public static final String TQ_ARCH_FORMULA_DEFAULT = "COH=1.00 ADI=0.00";
 	public static final String TQ_TEST_FORMULA = "tq.test.formula";
 	public static final String TQ_TEST_FORMULA_DEFAULT = "COV=0.40 LINE=0.30 BRAN=0.30";
 	public static final String TQ_CODE_FORMULA = "tq.code.formula";
@@ -84,7 +85,7 @@ public class TQPlugin implements Plugin {
 		list.add(DrynessDecorator.class);
 		list.add(DesignCBODecorator.class);
 		list.add(DesignDITDecorator.class);
-		list.add(DesignLCOMDecorator.class);
+		list.add(DesignLCOM4Decorator.class);
 		list.add(DesignNOMDecorator.class);
 		list.add(DesignRFCDecorator.class);
 		list.add(ArchitectureDecorator.class);

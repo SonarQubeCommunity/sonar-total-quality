@@ -47,12 +47,13 @@ public class ArchitectureCOHDecorator extends AbstractBaseDecorator {
 	
 	@Override
 	void decorateFile(Resource resource, DecoratorContext context) {
-		doDecoration(resource, context, CoreMetrics.FILE_CYCLES);
+		//doDecoration(resource, context, CoreMetrics.FILE_CYCLES);
 	}
 
 	@Override
 	void decorateDir(Resource resource, DecoratorContext context) {
-		doDecoration(resource, context, CoreMetrics.PACKAGE_CYCLES);
+		//doDecoration(resource, context, CoreMetrics.PACKAGE_CYCLES);
+		doDecoration(resource, context, CoreMetrics.FILE_CYCLES);
 	}
 	
 	private void doDecoration(Resource resource, DecoratorContext context, Metric metric) {
@@ -66,6 +67,7 @@ public class ArchitectureCOHDecorator extends AbstractBaseDecorator {
 	
 	@Override
 	void decorateProj(Resource resource, DecoratorContext context) {
+		
 		final Collection<Measure> measures = context.getChildrenMeasures(TQMetrics.TQ_ARCHITECTURE_COH);
 		if (measures == null || measures.size() == 0) {
 			return;
@@ -80,6 +82,8 @@ public class ArchitectureCOHDecorator extends AbstractBaseDecorator {
 		}
 		double value = size > 0.0 ? (total / size / 100) : 0.0;
 		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_COH, ParsingUtils.scaleValue(value * 100, 2));
+		
+		//doDecoration(resource, context, CoreMetrics.PACKAGE_CYCLES);
 	}
 
 }

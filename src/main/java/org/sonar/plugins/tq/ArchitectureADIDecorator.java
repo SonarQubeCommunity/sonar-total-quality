@@ -46,6 +46,12 @@ public class ArchitectureADIDecorator extends AbstractBaseDecorator {
 	}
 	
 	@Override
+	public void decorate(Resource resource, DecoratorContext context) {
+		// TODO no metric (DISTANCE) available
+		//super.decorate(resource, context);
+	}
+	
+	@Override
 	void decorateDir(Resource resource, DecoratorContext context) {
 		final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
 		final double cota = context.getProject().getConfiguration().getDouble(TQPlugin.TQ_ARCHITECTURE_ADI, Double.parseDouble(TQPlugin.TQ_ARCHITECTURE_ADI_DEFAULT));
@@ -93,6 +99,7 @@ public class ArchitectureADIDecorator extends AbstractBaseDecorator {
 		
 		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(res * 100, 2));
 		*/
+		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(100, 2));
 	}
 
 	@Override

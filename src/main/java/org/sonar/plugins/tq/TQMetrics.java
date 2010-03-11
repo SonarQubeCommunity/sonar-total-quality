@@ -65,9 +65,9 @@ public final class TQMetrics implements Metrics {
 			+ CoreMetrics.CLASS_COMPLEXITY_KEY + " gt value (12 default)", Metric.ValueType.PERCENT,
 		Metric.DIRECTION_BETTER, true, CoreMetrics.DOMAIN_DESIGN);
 
-	public static final String TQ_DESIGN_LCOM_KEY = "tq-design-lcom";
-	public static final Metric TQ_DESIGN_LCOM = new Metric(TQ_DESIGN_LCOM_KEY, "Design Lack of Cohesion of Methods",
-		"LCOM from classes with " + CoreMetrics.LCOM4_KEY + " gt vale (50 default)", Metric.ValueType.PERCENT,
+	public static final String TQ_DESIGN_LCOM4_KEY = "tq-design-lcom4";
+	public static final Metric TQ_DESIGN_LCOM4 = new Metric(TQ_DESIGN_LCOM4_KEY, "Design Lack of Cohesion of Methods",
+		"LCOM4 from classes with " + CoreMetrics.LCOM4_KEY + " gt vale (50 default)", Metric.ValueType.PERCENT,
 		Metric.DIRECTION_BETTER, true, CoreMetrics.DOMAIN_DESIGN);
 
 	public static final String TQ_DESIGN_RFC_KEY = "tq-design-rfc";
@@ -87,7 +87,7 @@ public final class TQMetrics implements Metrics {
 
 	public static final String TQ_DESIGN_KEY = "tq-design";
 	public static final Metric TQ_DESIGN = new Metric(TQ_DESIGN_KEY, "Design Quality",
-		"DES from " + TQ_DESIGN_DIT_KEY + ", " + TQ_DESIGN_CBO_KEY + ", " + TQ_DESIGN_LCOM_KEY + ", "
+		"DES from " + TQ_DESIGN_DIT_KEY + ", " + TQ_DESIGN_CBO_KEY + ", " + TQ_DESIGN_LCOM4_KEY + ", "
 			+ TQ_DESIGN_RFC_KEY + " and " + TQ_DESIGN_NOM_KEY, Metric.ValueType.PERCENT, Metric.DIRECTION_BETTER, true,
 		CoreMetrics.DOMAIN_DESIGN);
 
@@ -108,7 +108,7 @@ public final class TQMetrics implements Metrics {
 
 	public List<Metric> getMetrics() {
 		return Arrays.asList(TQ_TOTAL_QUALITY, TQ_DRY, TQ_CODE, TQ_TS, TQ_DESIGN_NOM, TQ_DESIGN_RFC, TQ_DESIGN_CBO,
-			TQ_DESIGN_DIT, TQ_DESIGN_LCOM, TQ_DESIGN, TQ_ARCHITECTURE_ADI, TQ_ARCHITECTURE_COH, TQ_ARCHITECTURE);
+			TQ_DESIGN_DIT, TQ_DESIGN_LCOM4, TQ_DESIGN, TQ_ARCHITECTURE_ADI, TQ_ARCHITECTURE_COH, TQ_ARCHITECTURE);
 	}
 
 	public static final Map<String, Metric> formulaParams = ImmutableMap.<String, Metric>builder()
@@ -117,7 +117,7 @@ public final class TQMetrics implements Metrics {
 		.put("CODE",   TQ_CODE)
 		.put("TESTS",  TQ_TS)
 		.put("NOM",    TQ_DESIGN_NOM)
-		.put("LCOM",   TQ_DESIGN_LCOM)
+		.put("LCOM",   TQ_DESIGN_LCOM4)
 		.put("RFC",    TQ_DESIGN_RFC)
 		.put("CBO",    TQ_DESIGN_CBO)
 		.put("DIT",    TQ_DESIGN_DIT)

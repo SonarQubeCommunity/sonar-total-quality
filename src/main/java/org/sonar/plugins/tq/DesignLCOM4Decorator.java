@@ -31,12 +31,12 @@ import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
 
-public class DesignLCOMDecorator extends AbstractDesignDecorator {
+public class DesignLCOM4Decorator extends AbstractDesignDecorator {
 
 	@DependedUpon
 	@Override
 	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_DESIGN_LCOM);
+		return Arrays.asList(TQMetrics.TQ_DESIGN_LCOM4);
 	}
 
 	@DependsUpon
@@ -53,7 +53,7 @@ public class DesignLCOMDecorator extends AbstractDesignDecorator {
 			.getProject().getConfiguration().getDouble(TQPlugin.TQ_DESIGN_LCOM,
 				Double.parseDouble(TQPlugin.TQ_DESIGN_LCOM_DEFAULT)));
 		
-		context.saveMeasure(TQMetrics.TQ_DESIGN_LCOM, lcom);
+		context.saveMeasure(TQMetrics.TQ_DESIGN_LCOM4, lcom);
 	}
 
 }

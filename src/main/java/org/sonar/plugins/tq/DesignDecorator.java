@@ -39,7 +39,7 @@ public class DesignDecorator extends AbstractFormulaBasedDecorator {
 
 	@DependsUpon
 	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(TQMetrics.TQ_DESIGN_CBO, TQMetrics.TQ_DESIGN_DIT, TQMetrics.TQ_DESIGN_LCOM,
+		return Arrays.asList(TQMetrics.TQ_DESIGN_CBO, TQMetrics.TQ_DESIGN_DIT, TQMetrics.TQ_DESIGN_LCOM4,
 			TQMetrics.TQ_DESIGN_NOM, TQMetrics.TQ_DESIGN_RFC);
 	}
 
