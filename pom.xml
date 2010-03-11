@@ -62,6 +62,11 @@
 		</dependency>
 
 	</dependencies>
+	<scm>
+		<connection>scm:svn:http://svn.codehaus.org/sonar-plugins/trunk/total-quality</connection>
+		<developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/trunk/total-quality</developerConnection>
+		<url>http://svn.sonar-plugins.codehaus.org</url>
+	</scm>
 
 	<build>
 		<plugins>
