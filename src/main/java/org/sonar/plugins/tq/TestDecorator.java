@@ -28,28 +28,26 @@ import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
-import org.sonar.api.resources.Resource;
 
 
 public class TestDecorator extends AbstractFormulaBasedDecorator {
 
+	@Override
+	protected String getLine(DecoratorContext context) {
+		return context.getProject().getConfiguration().getString(TQPlugin.TQ_TEST_FORMULA,
+			TQPlugin.TQ_TEST_FORMULA_DEFAULT);
+	}
+	
 	@DependedUpon
-	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_TS);
+	@Override
+	public Metric generatesMetric() {
+		return TQMetrics.TQ_TS;
 	}
 
 	@DependsUpon
 	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(CoreMetrics.COVERAGE, CoreMetrics.BRANCH_COVERAGE, CoreMetrics.LINE_COVERAGE);
+		return Arrays.asList(CoreMetrics.NCLOC, CoreMetrics.COVERAGE, CoreMetrics.BRANCH_COVERAGE, CoreMetrics.LINE_COVERAGE);
 	}
 
-	public void decorate(Resource resource, DecoratorContext context) {
-		final String line = context.getProject().getConfiguration().getString(TQPlugin.TQ_TEST_FORMULA,
-			TQPlugin.TQ_TEST_FORMULA_DEFAULT);
-
-		final Double value = solve(context, line);
-		
-		context.saveMeasure(TQMetrics.TQ_TS, value);
-	}
 
 }

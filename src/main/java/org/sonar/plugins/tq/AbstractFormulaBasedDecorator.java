@@ -20,17 +20,29 @@
 package org.sonar.plugins.tq;
 
 
-import org.sonar.api.batch.Decorator;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.measures.Measure;
 import org.sonar.api.measures.MeasureUtils;
 import org.sonar.api.measures.Metric;
-import org.sonar.api.resources.Java;
-import org.sonar.api.resources.Project;
+import org.sonar.api.resources.Resource;
 
 
-public abstract class AbstractFormulaBasedDecorator implements Decorator {
+public abstract class AbstractFormulaBasedDecorator extends AbstractDecorator {
 
+	public abstract Metric generatesMetric();
+	protected abstract String getLine(DecoratorContext context);
+	
+	public void decorate(Resource resource, DecoratorContext context) {
+		if (hasCode(context)) {
+			final String line = getLine(context);
+
+			final Double value = solve(context, line);
+
+			context.saveMeasure(generatesMetric(), value);
+		}
+		
+	}
+	
 	protected Double solve(DecoratorContext context, String formula) {
 		double sum = 0;
 
@@ -49,8 +61,4 @@ public abstract class AbstractFormulaBasedDecorator implements Decorator {
 		return Double.valueOf(sum);
 	}
 
-	/** Only for java projects. */
-	public boolean shouldExecuteOnProject(Project project) {
-		return Java.INSTANCE.equals(project.getLanguage());
-	}
 }

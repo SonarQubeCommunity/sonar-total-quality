@@ -19,14 +19,10 @@
  */
 package org.sonar.plugins.tq;
 
-import org.sonar.api.batch.Decorator;
 import org.sonar.api.batch.DecoratorContext;
-import org.sonar.api.measures.CoreMetrics;
-import org.sonar.api.resources.Java;
-import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Resource;
 
-public abstract class AbstractBaseDecorator implements Decorator {
+public abstract class AbstractBaseDecorator extends AbstractDecorator {
 
 	abstract void decorateFile(Resource resource, DecoratorContext context);
 	abstract void decorateDir(Resource resource, DecoratorContext context);
@@ -65,18 +61,5 @@ public abstract class AbstractBaseDecorator implements Decorator {
 				.equals(resource.getQualifier()));
 	}
 
-	public boolean hasCode(final DecoratorContext context) {
-		return context.getMeasure(CoreMetrics.NCLOC) != null
-			&& context.getMeasure(CoreMetrics.NCLOC).getValue() != null
-			&& context.getMeasure(CoreMetrics.NCLOC).getValue().doubleValue() > 0;
-	}
 
-	public boolean shouldSaveMeasure(final Resource resource) {
-		return !Resource.QUALIFIER_UNIT_TEST_CLASS.equals(resource.getQualifier());
-	}
-
-	/** Only for java projects. */
-	public boolean shouldExecuteOnProject(Project project) {
-		return Java.INSTANCE.equals(project.getLanguage());
-	}
 }

@@ -26,29 +26,28 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
-import org.sonar.api.resources.Resource;
 
 
 public class TotalQualityDecorator extends AbstractFormulaBasedDecorator {
 
+	@Override
+	protected String getLine(DecoratorContext context) {
+		return context.getProject().getConfiguration().getString(TQPlugin.TQ_TQ_FORMULA,
+			TQPlugin.TQ_TQ_FORMULA_DEFAULT);
+	}
+	
 	@DependedUpon
-	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_TOTAL_QUALITY);
+	@Override
+	public Metric generatesMetric() {
+		return TQMetrics.TQ_TOTAL_QUALITY;
 	}
 
 	@DependsUpon
 	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(TQMetrics.TQ_ARCHITECTURE, TQMetrics.TQ_DESIGN, TQMetrics.TQ_CODE, TQMetrics.TQ_TS);
+		return Arrays.asList(CoreMetrics.NCLOC, TQMetrics.TQ_ARCHITECTURE, TQMetrics.TQ_DESIGN, TQMetrics.TQ_CODE, TQMetrics.TQ_TS);
 	}
 
-	public void decorate(Resource resource, DecoratorContext context) {
-		final String line = context.getProject().getConfiguration().getString(TQPlugin.TQ_TQ_FORMULA,
-			TQPlugin.TQ_TQ_FORMULA_DEFAULT);
-
-		final Double value = solve(context, line);
-		
-		context.saveMeasure(TQMetrics.TQ_TOTAL_QUALITY, value);
-	}
 
 }

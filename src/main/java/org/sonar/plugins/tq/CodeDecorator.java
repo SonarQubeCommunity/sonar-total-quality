@@ -28,28 +28,24 @@ import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
-import org.sonar.api.resources.Resource;
 
 
 public class CodeDecorator extends AbstractFormulaBasedDecorator {
 
+	@Override
+	protected String getLine(DecoratorContext context) {
+		return context.getProject().getConfiguration().getString(TQPlugin.TQ_CODE_FORMULA,
+			TQPlugin.TQ_CODE_FORMULA_DEFAULT);
+	}
+	
 	@DependedUpon
-	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_CODE);
+	@Override
+	public Metric generatesMetric() {
+		return TQMetrics.TQ_CODE;
 	}
 
 	@DependsUpon
 	public List<Metric> dependsOnMetrics() {
 		return Arrays.asList(TQMetrics.TQ_DRY, CoreMetrics.PUBLIC_DOCUMENTED_API_DENSITY, CoreMetrics.VIOLATIONS_DENSITY);
 	}
-
-	public void decorate(Resource resource, DecoratorContext context) {
-		final String line = context.getProject().getConfiguration().getString(TQPlugin.TQ_CODE_FORMULA,
-			TQPlugin.TQ_CODE_FORMULA_DEFAULT);
-
-		final Double value = solve(context, line);
-		
-		context.saveMeasure(TQMetrics.TQ_CODE, value);
-	}
-
 }
