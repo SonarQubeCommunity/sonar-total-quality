@@ -17,7 +17,7 @@
  * License along with Sonar; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-package org.sonar.plugins.tq;
+package org.sonar.plugins.totalquality;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,29 +27,22 @@ import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
-import org.sonar.api.resources.Resource;
 
-public class DesignRFCDecorator extends AbstractDesignDecorator {
+public class CodeDecorator extends AbstractFormulaBasedDecorator {
+
+  @Override
+  protected String getLine(DecoratorContext context) {
+    return context.getProject().getConfiguration().getString(TQPlugin.TQ_CODE_FORMULA, TQPlugin.TQ_CODE_FORMULA_DEFAULT);
+  }
 
   @DependedUpon
   @Override
-  public List<Metric> generatesMetrics() {
-    return Arrays.asList(TQMetrics.TQ_DESIGN_RFC);
+  public Metric generatesMetric() {
+    return TQMetrics.TQ_CODE;
   }
 
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
-    return Arrays.asList(CoreMetrics.RFC, CoreMetrics.NCLOC);
+    return Arrays.asList(TQMetrics.TQ_DRY, CoreMetrics.PUBLIC_DOCUMENTED_API_DENSITY, CoreMetrics.VIOLATIONS_DENSITY);
   }
-
-  @Override
-  void decorateFile(Resource resource, DecoratorContext context) {
-    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
-
-    final double rfc = doFileDecoration(resource, context, CoreMetrics.RFC, aceleration, context.getProject().getConfiguration().getDouble(
-        TQPlugin.TQ_DESIGN_RFC, Double.parseDouble(TQPlugin.TQ_DESIGN_RFC_DEFAULT)));
-
-    context.saveMeasure(TQMetrics.TQ_DESIGN_RFC, rfc);
-  }
-
 }

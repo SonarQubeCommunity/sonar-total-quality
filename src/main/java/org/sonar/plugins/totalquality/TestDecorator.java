@@ -17,51 +17,33 @@
  * License along with Sonar; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-package org.sonar.plugins.tq;
+package org.sonar.plugins.totalquality;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.CoreMetrics;
-import org.sonar.api.measures.MeasureUtils;
 import org.sonar.api.measures.Metric;
-import org.sonar.api.resources.Resource;
 
-/** Dryness (duplicated lines inverse) decorator. */
-public final class DrynessDecorator extends AbstractDecorator {
+public class TestDecorator extends AbstractFormulaBasedDecorator {
 
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-  /** Dryness. */
-  @DependedUpon
-  public List<Metric> generatesMetrics() {
-    return Arrays.asList(TQMetrics.TQ_DRY);
+  @Override
+  protected String getLine(DecoratorContext context) {
+    return context.getProject().getConfiguration().getString(TQPlugin.TQ_TEST_FORMULA, TQPlugin.TQ_TEST_FORMULA_DEFAULT);
   }
 
-  /** Duplicated lines density. */
+  @DependedUpon
+  @Override
+  public Metric generatesMetric() {
+    return TQMetrics.TQ_TS;
+  }
+
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
-    return Arrays.asList(CoreMetrics.DUPLICATED_LINES_DENSITY);
-  }
-
-  public void decorate(Resource resource, DecoratorContext context) {
-    if (hasCode(context) && shouldSaveMeasure(resource)) {
-      final Double value = MeasureUtils.getValue(context.getMeasure(CoreMetrics.DUPLICATED_LINES_DENSITY), 0.0);
-      final Double dry = Double.valueOf(100D - value.doubleValue());
-
-      context.saveMeasure(TQMetrics.TQ_DRY, dry);
-      if (logger.isTraceEnabled()) {
-        logger.trace("DrynessDecorator :: " + resource.getKey() + " DRYness = " + dry.toString());
-      }
-    } else if (logger.isTraceEnabled()) {
-      logger.trace("DrynessDecorator :: " + resource.getKey() + " not computable.");
-    }
-
+    return Arrays.asList(CoreMetrics.NCLOC, CoreMetrics.COVERAGE, CoreMetrics.BRANCH_COVERAGE, CoreMetrics.LINE_COVERAGE);
   }
 
 }

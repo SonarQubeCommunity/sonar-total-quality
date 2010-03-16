@@ -17,7 +17,7 @@
  * License along with Sonar; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-package org.sonar.plugins.tq;
+package org.sonar.plugins.totalquality;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,27 +29,34 @@ import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
-public class DesignDITDecorator extends AbstractDesignDecorator {
+public class DesignNOMDecorator extends AbstractDesignDecorator {
 
   @DependedUpon
   @Override
   public List<Metric> generatesMetrics() {
-    return Arrays.asList(TQMetrics.TQ_DESIGN_DIT);
+    return Arrays.asList(TQMetrics.TQ_DESIGN_NOM);
   }
 
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
-    return Arrays.asList(CoreMetrics.DEPTH_IN_TREE, CoreMetrics.NCLOC);
+    return Arrays.asList(CoreMetrics.FUNCTION_COMPLEXITY, CoreMetrics.CLASS_COMPLEXITY, CoreMetrics.NCLOC);
   }
 
   @Override
   void decorateFile(Resource resource, DecoratorContext context) {
     final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
 
-    final double dit = doFileDecoration(resource, context, CoreMetrics.DEPTH_IN_TREE, aceleration, context.getProject().getConfiguration()
-        .getDouble(TQPlugin.TQ_DESIGN_DIT, Double.parseDouble(TQPlugin.TQ_DESIGN_DIT_DEFAULT)));
+    final double fc = doFileDecoration(resource, context, CoreMetrics.FUNCTION_COMPLEXITY, aceleration, context.getProject()
+        .getConfiguration().getDouble(TQPlugin.TQ_DESIGN_NOM_FUNCTION_COMPLEXITY,
+            Double.parseDouble(TQPlugin.TQ_DESIGN_NOM_FUNCTION_COMPLEXITY_DEFAULT)));
 
-    context.saveMeasure(TQMetrics.TQ_DESIGN_DIT, dit);
+    final double cc = doFileDecoration(resource, context, CoreMetrics.CLASS_COMPLEXITY, aceleration, context.getProject()
+        .getConfiguration().getDouble(TQPlugin.TQ_DESIGN_NOM_CLASS_COMPLEXITY,
+            Double.parseDouble(TQPlugin.TQ_DESIGN_NOM_CLASS_COMPLEXITY_DEFAULT)));
+
+    final double result = 0.5 * fc + 0.5 * cc;
+
+    context.saveMeasure(TQMetrics.TQ_DESIGN_NOM, result);
   }
 
 }

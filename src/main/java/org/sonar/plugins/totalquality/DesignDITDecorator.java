@@ -17,7 +17,7 @@
  * License along with Sonar; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-package org.sonar.plugins.tq;
+package org.sonar.plugins.totalquality;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,25 +25,31 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
+import org.sonar.api.resources.Resource;
 
-public class DesignDecorator extends AbstractFormulaBasedDecorator {
-
-  @Override
-  protected String getLine(DecoratorContext context) {
-    return context.getProject().getConfiguration().getString(TQPlugin.TQ_DESIGN_FORMULA, TQPlugin.TQ_DESIGN_FORMULA_DEFAULT);
-  }
+public class DesignDITDecorator extends AbstractDesignDecorator {
 
   @DependedUpon
   @Override
-  public Metric generatesMetric() {
-    return TQMetrics.TQ_DESIGN;
+  public List<Metric> generatesMetrics() {
+    return Arrays.asList(TQMetrics.TQ_DESIGN_DIT);
   }
 
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
-    return Arrays.asList(TQMetrics.TQ_DESIGN_CBO, TQMetrics.TQ_DESIGN_DIT, TQMetrics.TQ_DESIGN_LCOM4, TQMetrics.TQ_DESIGN_NOM,
-        TQMetrics.TQ_DESIGN_RFC);
+    return Arrays.asList(CoreMetrics.DEPTH_IN_TREE, CoreMetrics.NCLOC);
+  }
+
+  @Override
+  void decorateFile(Resource resource, DecoratorContext context) {
+    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
+
+    final double dit = doFileDecoration(resource, context, CoreMetrics.DEPTH_IN_TREE, aceleration, context.getProject().getConfiguration()
+        .getDouble(TQPlugin.TQ_DESIGN_DIT, Double.parseDouble(TQPlugin.TQ_DESIGN_DIT_DEFAULT)));
+
+    context.saveMeasure(TQMetrics.TQ_DESIGN_DIT, dit);
   }
 
 }

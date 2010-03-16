@@ -23,7 +23,7 @@
     </licenses>
     
 	<properties>
-		<sonar.plugin.class>org.sonar.plugins.tq.TQPlugin</sonar.plugin.class>
+		<sonar.plugin.class>org.sonar.plugins.totalquality.TQPlugin</sonar.plugin.class>
 		<sonar.version>2.0</sonar.version>
 	</properties>
 

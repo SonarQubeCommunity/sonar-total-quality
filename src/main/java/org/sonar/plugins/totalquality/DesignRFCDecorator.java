@@ -17,7 +17,7 @@
  * License along with Sonar; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-package org.sonar.plugins.tq;
+package org.sonar.plugins.totalquality;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,27 +29,27 @@ import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
-public class DesignLCOM4Decorator extends AbstractDesignDecorator {
+public class DesignRFCDecorator extends AbstractDesignDecorator {
 
   @DependedUpon
   @Override
   public List<Metric> generatesMetrics() {
-    return Arrays.asList(TQMetrics.TQ_DESIGN_LCOM4);
+    return Arrays.asList(TQMetrics.TQ_DESIGN_RFC);
   }
 
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
-    return Arrays.asList(CoreMetrics.LCOM4, CoreMetrics.NCLOC);
+    return Arrays.asList(CoreMetrics.RFC, CoreMetrics.NCLOC);
   }
 
   @Override
   void decorateFile(Resource resource, DecoratorContext context) {
     final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
 
-    final double lcom = doFileDecoration(resource, context, CoreMetrics.LCOM4, aceleration, context.getProject().getConfiguration()
-        .getDouble(TQPlugin.TQ_DESIGN_LCOM, Double.parseDouble(TQPlugin.TQ_DESIGN_LCOM_DEFAULT)));
+    final double rfc = doFileDecoration(resource, context, CoreMetrics.RFC, aceleration, context.getProject().getConfiguration().getDouble(
+        TQPlugin.TQ_DESIGN_RFC, Double.parseDouble(TQPlugin.TQ_DESIGN_RFC_DEFAULT)));
 
-    context.saveMeasure(TQMetrics.TQ_DESIGN_LCOM4, lcom);
+    context.saveMeasure(TQMetrics.TQ_DESIGN_RFC, rfc);
   }
 
 }

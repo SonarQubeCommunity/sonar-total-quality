@@ -17,7 +17,7 @@
  * License along with Sonar; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-package org.sonar.plugins.tq;
+package org.sonar.plugins.totalquality;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,31 +25,23 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
-import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
-import org.sonar.api.resources.Resource;
 
-public class DesignCBODecorator extends AbstractDesignDecorator {
+public class ArchitectureDecorator extends AbstractFormulaBasedDecorator {
+
+  @Override
+  protected String getLine(DecoratorContext context) {
+    return context.getProject().getConfiguration().getString(TQPlugin.TQ_ARCH_FORMULA, TQPlugin.TQ_ARCH_FORMULA_DEFAULT);
+  }
 
   @DependedUpon
   @Override
-  public List<Metric> generatesMetrics() {
-    return Arrays.asList(TQMetrics.TQ_DESIGN_CBO);
+  public Metric generatesMetric() {
+    return TQMetrics.TQ_ARCHITECTURE;
   }
 
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
-    return Arrays.asList(CoreMetrics.EFFERENT_COUPLINGS, CoreMetrics.NCLOC);
+    return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_COH, TQMetrics.TQ_ARCHITECTURE_ADI);
   }
-
-  @Override
-  void decorateFile(Resource resource, DecoratorContext context) {
-    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
-
-    final double cbo = doFileDecoration(resource, context, CoreMetrics.EFFERENT_COUPLINGS, aceleration, context.getProject()
-        .getConfiguration().getDouble(TQPlugin.TQ_DESIGN_CBO, Double.parseDouble(TQPlugin.TQ_DESIGN_CBO_DEFAULT)));
-
-    context.saveMeasure(TQMetrics.TQ_DESIGN_CBO, cbo);
-  }
-
 }
