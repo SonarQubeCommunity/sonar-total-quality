@@ -19,7 +19,6 @@
  */
 package org.sonar.plugins.tq;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,25 +27,23 @@ import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.Metric;
 
-
 public class DesignDecorator extends AbstractFormulaBasedDecorator {
 
-	@Override
-	protected String getLine(DecoratorContext context) {
-		return context.getProject().getConfiguration().getString(TQPlugin.TQ_DESIGN_FORMULA,
-			TQPlugin.TQ_DESIGN_FORMULA_DEFAULT);
-	}
-	
-	@DependedUpon
-	@Override
-	public Metric generatesMetric() {
-		return TQMetrics.TQ_DESIGN;
-	}
+  @Override
+  protected String getLine(DecoratorContext context) {
+    return context.getProject().getConfiguration().getString(TQPlugin.TQ_DESIGN_FORMULA, TQPlugin.TQ_DESIGN_FORMULA_DEFAULT);
+  }
 
-	@DependsUpon
-	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(TQMetrics.TQ_DESIGN_CBO, TQMetrics.TQ_DESIGN_DIT, TQMetrics.TQ_DESIGN_LCOM4,
-			TQMetrics.TQ_DESIGN_NOM, TQMetrics.TQ_DESIGN_RFC);
-	}
+  @DependedUpon
+  @Override
+  public Metric generatesMetric() {
+    return TQMetrics.TQ_DESIGN;
+  }
+
+  @DependsUpon
+  public List<Metric> dependsOnMetrics() {
+    return Arrays.asList(TQMetrics.TQ_DESIGN_CBO, TQMetrics.TQ_DESIGN_DIT, TQMetrics.TQ_DESIGN_LCOM4, TQMetrics.TQ_DESIGN_NOM,
+        TQMetrics.TQ_DESIGN_RFC);
+  }
 
 }

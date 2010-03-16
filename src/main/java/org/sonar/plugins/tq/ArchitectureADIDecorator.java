@@ -35,91 +35,85 @@ import org.sonar.api.utils.ParsingUtils;
 
 public class ArchitectureADIDecorator extends AbstractBaseDecorator {
 
-	@DependedUpon
-	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_ADI);
-	}
+  @DependedUpon
+  public List<Metric> generatesMetrics() {
+    return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_ADI);
+  }
 
-	@DependsUpon
-	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(CoreMetrics.DISTANCE, CoreMetrics.NCLOC);
-	}
-	
-	@Override
-	public void decorate(Resource resource, DecoratorContext context) {
-		// TODO no metric (DISTANCE) available
-		//super.decorate(resource, context);
-	}
-	
-	@Override
-	void decorateDir(Resource resource, DecoratorContext context) {
-		final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
-		final double cota = context.getProject().getConfiguration().getDouble(TQPlugin.TQ_ARCHITECTURE_ADI, Double.parseDouble(TQPlugin.TQ_ARCHITECTURE_ADI_DEFAULT));
-		final double top = aceleration <= 1 ? cota : aceleration * cota;
-		
-		final Measure measure = context.getMeasure(CoreMetrics.DISTANCE);
-		
-		final double distance = measure == null || measure.getValue() == null ? 0 : measure.getValue();
-		
-		final double res;// = distance > cota ? 0 : 1;
+  @DependsUpon
+  public List<Metric> dependsOnMetrics() {
+    return Arrays.asList(CoreMetrics.DISTANCE, CoreMetrics.NCLOC);
+  }
 
-		if (distance <= cota) {
-			res = 1;
-		} else if (distance > top) {
-			res = 0;
-		} else {
-			res = 1 - ((distance - cota) / (top - cota));
-		}
-		
-		
-		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(res * 100, 2));
-	}
+  @Override
+  public void decorate(Resource resource, DecoratorContext context) {
+    // TODO no metric (DISTANCE) available
+    // super.decorate(resource, context);
+  }
 
-	@Override
-	void decorateFile(Resource resource, DecoratorContext context) {
-		/*
-		final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
-		final double cota = context.getProject().getConfiguration().getDouble(TQPlugin.TQ_ARCHITECTURE_ADI, Double.parseDouble(TQPlugin.TQ_ARCHITECTURE_ADI_DEFAULT));
-		final double top = aceleration <= 1 ? cota : aceleration * cota;
-		
-		final Measure measure = context.getMeasure(CoreMetrics.DISTANCE);
-		
-		final double distance = measure == null || measure.getValue() == null ? 0 : measure.getValue();
-		
-		final double res;// = distance > cota ? 0 : 1;
+  @Override
+  void decorateDir(Resource resource, DecoratorContext context) {
+    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
+    final double cota = context.getProject().getConfiguration().getDouble(TQPlugin.TQ_ARCHITECTURE_ADI,
+        Double.parseDouble(TQPlugin.TQ_ARCHITECTURE_ADI_DEFAULT));
+    final double top = aceleration <= 1 ? cota : aceleration * cota;
 
-		if (distance <= cota) {
-			res = 1;
-		} else if (distance > top) {
-			res = 0;
-		} else {
-			res = 1 - ((distance - cota) / (top - cota));
-		}
-		
-		
-		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(res * 100, 2));
-		*/
-		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(100, 2));
-	}
+    final Measure measure = context.getMeasure(CoreMetrics.DISTANCE);
 
-	@Override
-	void decorateProj(Resource resource, DecoratorContext context) {
-		final Collection<Measure> measures = context.getChildrenMeasures(TQMetrics.TQ_ARCHITECTURE_ADI);
-		if (measures == null || measures.size() == 0) {
-			return;
-		}
+    final double distance = measure == null || measure.getValue() == null ? 0 : measure.getValue();
 
-		double total = 0;
-		double size = 0.0;
-		for (Measure m : measures) {
-			if (MeasureUtils.hasValue(m)) {
-				total = total + m.getValue();
-				size = size + 1;
-			}
-		}
+    final double res;// = distance > cota ? 0 : 1;
 
-		final double value = size > 0.0 ? (total / size / 100) : 0.0;
-		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(value * 100, 2));
-	}
+    if (distance <= cota) {
+      res = 1;
+    } else if (distance > top) {
+      res = 0;
+    } else {
+      res = 1 - ((distance - cota) / (top - cota));
+    }
+
+    context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(res * 100, 2));
+  }
+
+  @Override
+  void decorateFile(Resource resource, DecoratorContext context) {
+    /*
+     * final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
+     * final double cota = context.getProject().getConfiguration().getDouble(TQPlugin.TQ_ARCHITECTURE_ADI,
+     * Double.parseDouble(TQPlugin.TQ_ARCHITECTURE_ADI_DEFAULT)); final double top = aceleration <= 1 ? cota : aceleration * cota;
+     * 
+     * final Measure measure = context.getMeasure(CoreMetrics.DISTANCE);
+     * 
+     * final double distance = measure == null || measure.getValue() == null ? 0 : measure.getValue();
+     * 
+     * final double res;// = distance > cota ? 0 : 1;
+     * 
+     * if (distance <= cota) { res = 1; } else if (distance > top) { res = 0; } else { res = 1 - ((distance - cota) / (top - cota)); }
+     * 
+     * 
+     * context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(res * 100, 2));
+     */
+    context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(100, 2));
+  }
+
+  @Override
+  void decorateProj(Resource resource, DecoratorContext context) {
+    final Collection<Measure> measures = context.getChildrenMeasures(TQMetrics.TQ_ARCHITECTURE_ADI);
+    if (measures == null || measures.size() == 0) {
+      return;
+    }
+
+    double total = 0;
+    double size = 0.0;
+    for (Measure m : measures) {
+      if (MeasureUtils.hasValue(m)) {
+        total = total + m.getValue();
+        size = size + 1;
+      }
+    }
+
+    final double value = size > 0.0 ? (total / size / 100) : 0.0;
+    context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(value * 100, 2));
+  }
 
 }

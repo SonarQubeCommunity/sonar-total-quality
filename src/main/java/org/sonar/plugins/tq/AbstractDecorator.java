@@ -28,18 +28,17 @@ import org.sonar.api.resources.Resource;
 
 public abstract class AbstractDecorator implements Decorator {
 
-	public boolean hasCode(final DecoratorContext context) {
-		return context.getMeasure(CoreMetrics.NCLOC) != null
-			&& context.getMeasure(CoreMetrics.NCLOC).getValue() != null
-			&& context.getMeasure(CoreMetrics.NCLOC).getValue().doubleValue() > 0;
-	}
+  public boolean hasCode(final DecoratorContext context) {
+    return context.getMeasure(CoreMetrics.NCLOC) != null && context.getMeasure(CoreMetrics.NCLOC).getValue() != null
+        && context.getMeasure(CoreMetrics.NCLOC).getValue().doubleValue() > 0;
+  }
 
-	public boolean shouldSaveMeasure(final Resource resource) {
-		return !Resource.QUALIFIER_UNIT_TEST_CLASS.equals(resource.getQualifier());
-	}
+  public boolean shouldSaveMeasure(final Resource resource) {
+    return !Resource.QUALIFIER_UNIT_TEST_CLASS.equals(resource.getQualifier());
+  }
 
-	/** Only for java projects. */
-	public boolean shouldExecuteOnProject(Project project) {
-		return Java.INSTANCE.equals(project.getLanguage());
-	}
+  /** Only for java projects. */
+  public boolean shouldExecuteOnProject(Project project) {
+    return Java.INSTANCE.equals(project.getLanguage());
+  }
 }

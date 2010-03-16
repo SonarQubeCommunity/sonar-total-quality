@@ -34,34 +34,34 @@ import org.sonar.api.resources.Resource;
 
 /** Dryness (duplicated lines inverse) decorator. */
 public final class DrynessDecorator extends AbstractDecorator {
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	
-	/** Dryness. */
-	@DependedUpon
-	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_DRY);
-	}
-	
-	/** Duplicated lines density. */
-	@DependsUpon
-	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(CoreMetrics.DUPLICATED_LINES_DENSITY);
-	}
-	
-	public void decorate(Resource resource, DecoratorContext context) {
-		if (hasCode(context) && shouldSaveMeasure(resource)) {
-			final Double value = MeasureUtils.getValue(context.getMeasure(CoreMetrics.DUPLICATED_LINES_DENSITY), 0.0);
-			final Double dry = Double.valueOf(100D - value.doubleValue());
-			
-			context.saveMeasure(TQMetrics.TQ_DRY, dry);
-			if (logger.isTraceEnabled()) {
-				logger.trace("DrynessDecorator :: " + resource.getKey() + " DRYness = " + dry.toString());
-			}
-		} else if (logger.isTraceEnabled()) {
-			logger.trace("DrynessDecorator :: " + resource.getKey() + " not computable.");
-		}
-		
-	}
+
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+  /** Dryness. */
+  @DependedUpon
+  public List<Metric> generatesMetrics() {
+    return Arrays.asList(TQMetrics.TQ_DRY);
+  }
+
+  /** Duplicated lines density. */
+  @DependsUpon
+  public List<Metric> dependsOnMetrics() {
+    return Arrays.asList(CoreMetrics.DUPLICATED_LINES_DENSITY);
+  }
+
+  public void decorate(Resource resource, DecoratorContext context) {
+    if (hasCode(context) && shouldSaveMeasure(resource)) {
+      final Double value = MeasureUtils.getValue(context.getMeasure(CoreMetrics.DUPLICATED_LINES_DENSITY), 0.0);
+      final Double dry = Double.valueOf(100D - value.doubleValue());
+
+      context.saveMeasure(TQMetrics.TQ_DRY, dry);
+      if (logger.isTraceEnabled()) {
+        logger.trace("DrynessDecorator :: " + resource.getKey() + " DRYness = " + dry.toString());
+      }
+    } else if (logger.isTraceEnabled()) {
+      logger.trace("DrynessDecorator :: " + resource.getKey() + " not computable.");
+    }
+
+  }
 
 }

@@ -19,7 +19,6 @@
  */
 package org.sonar.plugins.tq;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,23 +27,21 @@ import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.Metric;
 
-
 public class ArchitectureDecorator extends AbstractFormulaBasedDecorator {
 
-	@Override
-	protected String getLine(DecoratorContext context) {
-		return context.getProject().getConfiguration().getString(TQPlugin.TQ_ARCH_FORMULA,
-			TQPlugin.TQ_ARCH_FORMULA_DEFAULT);
-	}
-	
-	@DependedUpon
-	@Override
-	public Metric generatesMetric() {
-		return TQMetrics.TQ_ARCHITECTURE;
-	}
+  @Override
+  protected String getLine(DecoratorContext context) {
+    return context.getProject().getConfiguration().getString(TQPlugin.TQ_ARCH_FORMULA, TQPlugin.TQ_ARCH_FORMULA_DEFAULT);
+  }
 
-	@DependsUpon
-	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_COH, TQMetrics.TQ_ARCHITECTURE_ADI);
-	}
+  @DependedUpon
+  @Override
+  public Metric generatesMetric() {
+    return TQMetrics.TQ_ARCHITECTURE;
+  }
+
+  @DependsUpon
+  public List<Metric> dependsOnMetrics() {
+    return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_COH, TQMetrics.TQ_ARCHITECTURE_ADI);
+  }
 }

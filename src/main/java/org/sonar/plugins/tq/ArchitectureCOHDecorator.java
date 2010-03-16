@@ -35,55 +35,55 @@ import org.sonar.api.utils.ParsingUtils;
 
 public class ArchitectureCOHDecorator extends AbstractBaseDecorator {
 
-	@DependedUpon
-	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_COH);
-	}
+  @DependedUpon
+  public List<Metric> generatesMetrics() {
+    return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_COH);
+  }
 
-	@DependsUpon
-	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(CoreMetrics.FILE_CYCLES, CoreMetrics.PACKAGE_CYCLES, CoreMetrics.NCLOC);
-	}
-	
-	@Override
-	void decorateFile(Resource resource, DecoratorContext context) {
-		//doDecoration(resource, context, CoreMetrics.FILE_CYCLES);
-	}
+  @DependsUpon
+  public List<Metric> dependsOnMetrics() {
+    return Arrays.asList(CoreMetrics.FILE_CYCLES, CoreMetrics.PACKAGE_CYCLES, CoreMetrics.NCLOC);
+  }
 
-	@Override
-	void decorateDir(Resource resource, DecoratorContext context) {
-		//doDecoration(resource, context, CoreMetrics.PACKAGE_CYCLES);
-		doDecoration(resource, context, CoreMetrics.FILE_CYCLES);
-	}
-	
-	private void doDecoration(Resource resource, DecoratorContext context, Metric metric) {
-		final Measure measure = context.getMeasure(metric);
+  @Override
+  void decorateFile(Resource resource, DecoratorContext context) {
+    // doDecoration(resource, context, CoreMetrics.FILE_CYCLES);
+  }
 
-		final double cycles = MeasureUtils.hasValue(measure) ? measure.getValue() : 0;
-		final double res = cycles > 0 ? 0 : 1;
-		
-		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_COH, ParsingUtils.scaleValue(res * 100, 2));
-	}
-	
-	@Override
-	void decorateProj(Resource resource, DecoratorContext context) {
-		
-		final Collection<Measure> measures = context.getChildrenMeasures(TQMetrics.TQ_ARCHITECTURE_COH);
-		if (measures == null || measures.size() == 0) {
-			return;
-		}
-		double total = 0;
-		double size = 0.0;
-		for (Measure m : measures) {
-			if (MeasureUtils.hasValue(m)) {
-				total = total + m.getValue();
-				size = size + 1;
-			}
-		}
-		double value = size > 0.0 ? (total / size / 100) : 0.0;
-		context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_COH, ParsingUtils.scaleValue(value * 100, 2));
-		
-		//doDecoration(resource, context, CoreMetrics.PACKAGE_CYCLES);
-	}
+  @Override
+  void decorateDir(Resource resource, DecoratorContext context) {
+    // doDecoration(resource, context, CoreMetrics.PACKAGE_CYCLES);
+    doDecoration(resource, context, CoreMetrics.FILE_CYCLES);
+  }
+
+  private void doDecoration(Resource resource, DecoratorContext context, Metric metric) {
+    final Measure measure = context.getMeasure(metric);
+
+    final double cycles = MeasureUtils.hasValue(measure) ? measure.getValue() : 0;
+    final double res = cycles > 0 ? 0 : 1;
+
+    context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_COH, ParsingUtils.scaleValue(res * 100, 2));
+  }
+
+  @Override
+  void decorateProj(Resource resource, DecoratorContext context) {
+
+    final Collection<Measure> measures = context.getChildrenMeasures(TQMetrics.TQ_ARCHITECTURE_COH);
+    if (measures == null || measures.size() == 0) {
+      return;
+    }
+    double total = 0;
+    double size = 0.0;
+    for (Measure m : measures) {
+      if (MeasureUtils.hasValue(m)) {
+        total = total + m.getValue();
+        size = size + 1;
+      }
+    }
+    double value = size > 0.0 ? (total / size / 100) : 0.0;
+    context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_COH, ParsingUtils.scaleValue(value * 100, 2));
+
+    // doDecoration(resource, context, CoreMetrics.PACKAGE_CYCLES);
+  }
 
 }

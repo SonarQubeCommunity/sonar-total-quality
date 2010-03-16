@@ -29,60 +29,60 @@ import org.sonar.api.utils.ParsingUtils;
 
 public abstract class AbstractDesignDecorator extends AbstractBaseDecorator {
 
-	abstract List<Metric> generatesMetrics();
+  abstract List<Metric> generatesMetrics();
 
-	double doFileDecoration(final Resource resource, final DecoratorContext context, final Metric orig,
-		final int aceleration, final double cota) {
-		final double value;
+  double doFileDecoration(final Resource resource, final DecoratorContext context, final Metric orig, final int aceleration,
+      final double cota) {
+    final double value;
 
-		final Measure measure = context.getMeasure(orig);
-		final double metric = measure != null ? measure.getValue() : 0;
-		final double top = aceleration <= 1 ? cota : aceleration * cota;
+    final Measure measure = context.getMeasure(orig);
+    final double metric = measure != null ? measure.getValue() : 0;
+    final double top = aceleration <= 1 ? cota : aceleration * cota;
 
-		if (metric <= cota) {
-			value = 100.0;
-		} else if (metric > top) {
-			value = 0.0;
-		} else {
-			value = ParsingUtils.scaleValue((1 - ((metric - cota) / (top - cota))) * 100, 2);
-		}
+    if (metric <= cota) {
+      value = 100.0;
+    } else if (metric > top) {
+      value = 0.0;
+    } else {
+      value = ParsingUtils.scaleValue((1 - ((metric - cota) / (top - cota))) * 100, 2);
+    }
 
-		return value;
-	}
+    return value;
+  }
 
-	@Override
-	void decorateDir(Resource resource, DecoratorContext context) {
-		final List<DecoratorContext> children = context.getChildren();
+  @Override
+  void decorateDir(Resource resource, DecoratorContext context) {
+    final List<DecoratorContext> children = context.getChildren();
 
-		if (children != null && !children.isEmpty()) {
-			final List<Metric> metrics = generatesMetrics();
+    if (children != null && !children.isEmpty()) {
+      final List<Metric> metrics = generatesMetrics();
 
-			for (Metric metric : metrics) {
-				double sum = 0.0;
-				double size = 0.0;
+      for (Metric metric : metrics) {
+        double sum = 0.0;
+        double size = 0.0;
 
-				for (DecoratorContext dc : children) {
-					final Resource c = dc.getResource();
-					if (!c.getQualifier().equals(Resource.QUALIFIER_UNIT_TEST_CLASS)) {
-						final Measure measure = dc.getMeasure(metric);
+        for (DecoratorContext dc : children) {
+          final Resource c = dc.getResource();
+          if ( !c.getQualifier().equals(Resource.QUALIFIER_UNIT_TEST_CLASS)) {
+            final Measure measure = dc.getMeasure(metric);
 
-						if (measure != null && measure.getValue() != null) {
-							sum += measure.getValue();
-							size = size + 1;
-						}
-					}
-				}
-				double value = size > 0.0 ? (sum / size) : -1;
-				if (value != -1) {
-					context.saveMeasure(new Measure(metric, ParsingUtils.scaleValue(value, 2)));
-				}
-			}
-		}
-	}
+            if (measure != null && measure.getValue() != null) {
+              sum += measure.getValue();
+              size = size + 1;
+            }
+          }
+        }
+        double value = size > 0.0 ? (sum / size) : -1;
+        if (value != -1) {
+          context.saveMeasure(new Measure(metric, ParsingUtils.scaleValue(value, 2)));
+        }
+      }
+    }
+  }
 
-	@Override
-	void decorateProj(Resource resource, DecoratorContext context) {
-		decorateDir(resource, context);
-	}
+  @Override
+  void decorateProj(Resource resource, DecoratorContext context) {
+    decorateDir(resource, context);
+  }
 
 }

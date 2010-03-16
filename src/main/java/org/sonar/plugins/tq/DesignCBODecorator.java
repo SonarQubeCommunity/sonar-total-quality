@@ -19,7 +19,6 @@
  */
 package org.sonar.plugins.tq;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,30 +29,27 @@ import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
-
 public class DesignCBODecorator extends AbstractDesignDecorator {
 
-	@DependedUpon
-	@Override
-	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_DESIGN_CBO);
-	}
+  @DependedUpon
+  @Override
+  public List<Metric> generatesMetrics() {
+    return Arrays.asList(TQMetrics.TQ_DESIGN_CBO);
+  }
 
-	@DependsUpon
-	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(CoreMetrics.EFFERENT_COUPLINGS, CoreMetrics.NCLOC);
-	}
+  @DependsUpon
+  public List<Metric> dependsOnMetrics() {
+    return Arrays.asList(CoreMetrics.EFFERENT_COUPLINGS, CoreMetrics.NCLOC);
+  }
 
-	@Override
-	void decorateFile(Resource resource, DecoratorContext context) {
-		final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE,
-			Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
+  @Override
+  void decorateFile(Resource resource, DecoratorContext context) {
+    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
 
-		final double cbo = doFileDecoration(resource, context, CoreMetrics.EFFERENT_COUPLINGS, aceleration, context
-			.getProject().getConfiguration().getDouble(TQPlugin.TQ_DESIGN_CBO,
-				Double.parseDouble(TQPlugin.TQ_DESIGN_CBO_DEFAULT)));
-		
-		context.saveMeasure(TQMetrics.TQ_DESIGN_CBO, cbo);
-	}
+    final double cbo = doFileDecoration(resource, context, CoreMetrics.EFFERENT_COUPLINGS, aceleration, context.getProject()
+        .getConfiguration().getDouble(TQPlugin.TQ_DESIGN_CBO, Double.parseDouble(TQPlugin.TQ_DESIGN_CBO_DEFAULT)));
+
+    context.saveMeasure(TQMetrics.TQ_DESIGN_CBO, cbo);
+  }
 
 }

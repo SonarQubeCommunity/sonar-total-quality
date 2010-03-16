@@ -19,7 +19,6 @@
  */
 package org.sonar.plugins.tq;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,25 +28,22 @@ import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 
-
 public class TestDecorator extends AbstractFormulaBasedDecorator {
 
-	@Override
-	protected String getLine(DecoratorContext context) {
-		return context.getProject().getConfiguration().getString(TQPlugin.TQ_TEST_FORMULA,
-			TQPlugin.TQ_TEST_FORMULA_DEFAULT);
-	}
-	
-	@DependedUpon
-	@Override
-	public Metric generatesMetric() {
-		return TQMetrics.TQ_TS;
-	}
+  @Override
+  protected String getLine(DecoratorContext context) {
+    return context.getProject().getConfiguration().getString(TQPlugin.TQ_TEST_FORMULA, TQPlugin.TQ_TEST_FORMULA_DEFAULT);
+  }
 
-	@DependsUpon
-	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(CoreMetrics.NCLOC, CoreMetrics.COVERAGE, CoreMetrics.BRANCH_COVERAGE, CoreMetrics.LINE_COVERAGE);
-	}
+  @DependedUpon
+  @Override
+  public Metric generatesMetric() {
+    return TQMetrics.TQ_TS;
+  }
 
+  @DependsUpon
+  public List<Metric> dependsOnMetrics() {
+    return Arrays.asList(CoreMetrics.NCLOC, CoreMetrics.COVERAGE, CoreMetrics.BRANCH_COVERAGE, CoreMetrics.LINE_COVERAGE);
+  }
 
 }

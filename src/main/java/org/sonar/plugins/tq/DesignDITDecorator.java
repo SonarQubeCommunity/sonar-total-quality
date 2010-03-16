@@ -19,7 +19,6 @@
  */
 package org.sonar.plugins.tq;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,30 +29,27 @@ import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
-
 public class DesignDITDecorator extends AbstractDesignDecorator {
 
-	@DependedUpon
-	@Override
-	public List<Metric> generatesMetrics() {
-		return Arrays.asList(TQMetrics.TQ_DESIGN_DIT);
-	}
+  @DependedUpon
+  @Override
+  public List<Metric> generatesMetrics() {
+    return Arrays.asList(TQMetrics.TQ_DESIGN_DIT);
+  }
 
-	@DependsUpon
-	public List<Metric> dependsOnMetrics() {
-		return Arrays.asList(CoreMetrics.DEPTH_IN_TREE, CoreMetrics.NCLOC);
-	}
+  @DependsUpon
+  public List<Metric> dependsOnMetrics() {
+    return Arrays.asList(CoreMetrics.DEPTH_IN_TREE, CoreMetrics.NCLOC);
+  }
 
-	@Override
-	void decorateFile(Resource resource, DecoratorContext context) {
-		final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE,
-			Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
+  @Override
+  void decorateFile(Resource resource, DecoratorContext context) {
+    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
 
-		final double dit = doFileDecoration(resource, context, CoreMetrics.DEPTH_IN_TREE, aceleration, context
-			.getProject().getConfiguration().getDouble(TQPlugin.TQ_DESIGN_DIT,
-				Double.parseDouble(TQPlugin.TQ_DESIGN_DIT_DEFAULT)));
-		
-		context.saveMeasure(TQMetrics.TQ_DESIGN_DIT, dit);
-	}
+    final double dit = doFileDecoration(resource, context, CoreMetrics.DEPTH_IN_TREE, aceleration, context.getProject().getConfiguration()
+        .getDouble(TQPlugin.TQ_DESIGN_DIT, Double.parseDouble(TQPlugin.TQ_DESIGN_DIT_DEFAULT)));
+
+    context.saveMeasure(TQMetrics.TQ_DESIGN_DIT, dit);
+  }
 
 }
