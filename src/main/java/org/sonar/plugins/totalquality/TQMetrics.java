@@ -82,9 +82,9 @@ public final class TQMetrics implements Metrics {
       + TQ_DESIGN_CBO_KEY + ", " + TQ_DESIGN_LCOM4_KEY + ", " + TQ_DESIGN_RFC_KEY + " and " + TQ_DESIGN_NOM_KEY, Metric.ValueType.PERCENT,
       Metric.DIRECTION_BETTER, true, CoreMetrics.DOMAIN_DESIGN);
 
-  // public static final String TQ_ARCHITECTURE_COH_KEY = "total-quality-architecture-coh";
-  // public static final Metric TQ_ARCHITECTURE_COH = new Metric(TQ_ARCHITECTURE_COH_KEY, "Architecture Cohesion",
-  // "COH from inverse of files or packages with cycles", Metric.ValueType.PERCENT, Metric.DIRECTION_BETTER, true, DOMAIN_ARCHITECTURE);
+  public static final String TQ_ARCHITECTURE_PTI_KEY = "total-quality-architecture-pti";
+  public static final Metric TQ_ARCHITECTURE_PTI = new Metric(TQ_ARCHITECTURE_PTI_KEY, "Architecture Tangle Index",
+      "Inverse of Packages and files tangle index", Metric.ValueType.PERCENT, Metric.DIRECTION_BETTER, true, DOMAIN_ARCHITECTURE);
 
   public static final String TQ_ARCHITECTURE_ADI_KEY = "total-quality-architecture-adi";
   public static final Metric TQ_ARCHITECTURE_ADI = new Metric("isoqa_architecture_adi", "Architecture Distance", "ADI from "
@@ -101,7 +101,7 @@ public final class TQMetrics implements Metrics {
 
   public static final Map<String, Metric> formulaParams = ImmutableMap.<String, Metric> builder().put("ARCH", TQ_ARCHITECTURE).put(
       "DESIGN", TQ_DESIGN).put("CODE", TQ_CODE).put("TESTS", TQ_TS).put("NOM", TQ_DESIGN_NOM).put("LCOM", TQ_DESIGN_LCOM4).put("RFC",
-      TQ_DESIGN_RFC).put("CBO", TQ_DESIGN_CBO).put("DIT", TQ_DESIGN_DIT).put("PTI", CoreMetrics.PACKAGE_TANGLE_INDEX).put("ADI",
+      TQ_DESIGN_RFC).put("CBO", TQ_DESIGN_CBO).put("DIT", TQ_DESIGN_DIT).put("PTI", TQ_ARCHITECTURE_PTI).put("ADI",
       TQ_ARCHITECTURE_ADI).put("COV", CoreMetrics.COVERAGE).put("SUC", CoreMetrics.TEST_SUCCESS_DENSITY).put("DOC",
       CoreMetrics.PUBLIC_DOCUMENTED_API_DENSITY).put("RULES", CoreMetrics.VIOLATIONS_DENSITY).put("DRY", TQ_DRY).build();
 
