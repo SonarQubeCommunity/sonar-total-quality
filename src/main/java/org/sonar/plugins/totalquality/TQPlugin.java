@@ -93,6 +93,7 @@ public class TQPlugin implements Plugin {
     list.add(TotalQualityDecorator.class);
     list.add(ArchitectureADIDecorator.class);
     list.add(ArchitecturePTIDecorator.class);
+    list.add(TotalQualityWidget.class);
 
     return list;
   }
