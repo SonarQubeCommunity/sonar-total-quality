@@ -96,7 +96,7 @@ public final class TQMetrics implements Metrics {
 
   public List<Metric> getMetrics() {
     return Arrays.asList(TQ_TOTAL_QUALITY, TQ_DRY, TQ_CODE, TQ_TS, TQ_DESIGN_NOM, TQ_DESIGN_RFC, TQ_DESIGN_CBO, TQ_DESIGN_DIT,
-        TQ_DESIGN_LCOM4, TQ_DESIGN, TQ_ARCHITECTURE_ADI, TQ_ARCHITECTURE);
+        TQ_DESIGN_LCOM4, TQ_DESIGN, TQ_ARCHITECTURE_ADI, TQ_ARCHITECTURE_PTI, TQ_ARCHITECTURE);
   }
 
   public static final Map<String, Metric> formulaParams = ImmutableMap.<String, Metric> builder().put("ARCH", TQ_ARCHITECTURE).put(
