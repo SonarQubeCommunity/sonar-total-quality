@@ -65,10 +65,10 @@ public class TQPlugin implements Plugin {
   public static final String TQ_DESIGN_FORMULA = "tq.design.formula";
   public static final String TQ_DESIGN_FORMULA_DEFAULT = "NOM=0.15 LCOM=0.15 RFC=0.25 CBO=0.25 DIT=0.20";
   public static final String TQ_ARCH_FORMULA = "tq.architecture.formula";
-  // public static final String TQ_ARCH_FORMULA_DEFAULT = "COH=0.50 ADI=0.50";
-  public static final String TQ_ARCH_FORMULA_DEFAULT = "COH=1.00 ADI=0.00";
+  // public static final String TQ_ARCH_FORMULA_DEFAULT = "PTI=0.50 ADI=0.50";
+  public static final String TQ_ARCH_FORMULA_DEFAULT = "PTI=1.00 ADI=0.00";
   public static final String TQ_TEST_FORMULA = "tq.test.formula";
-  public static final String TQ_TEST_FORMULA_DEFAULT = "COV=0.40 LINE=0.30 BRAN=0.30";
+  public static final String TQ_TEST_FORMULA_DEFAULT = "COV=0.80 SUC=0.20";
   public static final String TQ_CODE_FORMULA = "tq.code.formula";
   public static final String TQ_CODE_FORMULA_DEFAULT = "DOC=0.15 RULES=0.45 DRY=0.40";
 
@@ -92,7 +92,6 @@ public class TQPlugin implements Plugin {
     list.add(TestDecorator.class);
     list.add(TotalQualityDecorator.class);
     list.add(ArchitectureADIDecorator.class);
-    list.add(ArchitectureCOHDecorator.class);
 
     return list;
   }

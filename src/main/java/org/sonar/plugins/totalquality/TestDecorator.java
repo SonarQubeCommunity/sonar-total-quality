@@ -43,7 +43,7 @@ public class TestDecorator extends AbstractFormulaBasedDecorator {
 
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
-    return Arrays.asList(CoreMetrics.NCLOC, CoreMetrics.COVERAGE, CoreMetrics.BRANCH_COVERAGE, CoreMetrics.LINE_COVERAGE);
+    return Arrays.asList(CoreMetrics.NCLOC, CoreMetrics.COVERAGE, CoreMetrics.TEST_SUCCESS_DENSITY);
   }
 
 }

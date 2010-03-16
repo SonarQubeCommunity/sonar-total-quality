@@ -25,6 +25,7 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 
 public class ArchitectureDecorator extends AbstractFormulaBasedDecorator {
@@ -42,6 +43,6 @@ public class ArchitectureDecorator extends AbstractFormulaBasedDecorator {
 
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
-    return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_COH, TQMetrics.TQ_ARCHITECTURE_ADI);
+    return Arrays.asList(CoreMetrics.PACKAGE_TANGLE_INDEX, TQMetrics.TQ_ARCHITECTURE_ADI);
   }
 }
