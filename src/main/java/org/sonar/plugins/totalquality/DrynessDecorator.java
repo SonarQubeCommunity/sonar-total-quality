@@ -22,8 +22,6 @@ package org.sonar.plugins.totalquality;
 import java.util.Arrays;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
@@ -34,8 +32,6 @@ import org.sonar.api.resources.Resource;
 
 /** Dryness (duplicated lines inverse) decorator. */
 public final class DrynessDecorator extends AbstractDecorator {
-
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   /** Dryness. */
   @DependedUpon
@@ -55,11 +51,6 @@ public final class DrynessDecorator extends AbstractDecorator {
       final Double dry = Double.valueOf(100D - value.doubleValue());
 
       context.saveMeasure(TQMetrics.TQ_DRY, dry);
-      if (logger.isTraceEnabled()) {
-        logger.trace("DrynessDecorator :: " + resource.getKey() + " DRYness = " + dry.toString());
-      }
-    } else if (logger.isTraceEnabled()) {
-      logger.trace("DrynessDecorator :: " + resource.getKey() + " not computable.");
     }
 
   }
