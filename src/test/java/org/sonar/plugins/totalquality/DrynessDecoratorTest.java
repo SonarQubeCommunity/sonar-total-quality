@@ -43,7 +43,7 @@ public class DrynessDecoratorTest {
     when(ncl.getValue()).thenReturn(4500D);
     
     final Resource res = mock(Resource.class);
-    when(res.getQualifier()).thenReturn(Resource.QUALIFIER_CLASS);
+    when(res.getQualifier()).thenReturn(Resource.QUALIFIER_MODULE);
     
     final DecoratorContextSupport context = spy(new DecoratorContextSupport());
     
@@ -64,7 +64,7 @@ public class DrynessDecoratorTest {
     when(dup.getValue()).thenReturn(45D);
 
     final Resource res = mock(Resource.class);
-    when(res.getQualifier()).thenReturn(Resource.QUALIFIER_CLASS);
+    when(res.getQualifier()).thenReturn(Resource.QUALIFIER_PROJECT);
     
     final DecoratorContextSupport context = spy(new DecoratorContextSupport());
     

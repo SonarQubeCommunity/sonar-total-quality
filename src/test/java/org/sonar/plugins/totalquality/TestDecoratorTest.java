@@ -20,7 +20,6 @@
 package org.sonar.plugins.totalquality;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -42,7 +41,7 @@ public class TestDecoratorTest {
     final double val = (0.80 * cov) + (0.20 * suc); 
     
     final Resource res = mock(Resource.class);
-    when(res.getQualifier()).thenReturn(Resource.QUALIFIER_CLASS);
+    when(res.getQualifier()).thenReturn(Resource.QUALIFIER_MODULE);
     
     final Measure ncl = mock(Measure.class);
     when(ncl.getValue()).thenReturn(4500D);
