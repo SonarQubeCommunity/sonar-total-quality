@@ -41,4 +41,18 @@ public abstract class AbstractDecorator implements Decorator {
   public boolean shouldExecuteOnProject(Project project) {
     return Java.INSTANCE.equals(project.getLanguage());
   }
+
+  public boolean isFile(final Resource resource) {
+    return (Resource.QUALIFIER_FILE.equals(resource.getQualifier()) || Resource.QUALIFIER_CLASS.equals(resource.getQualifier()));
+  }
+
+  public boolean isDir(final Resource resource) {
+    return (Resource.QUALIFIER_DIRECTORY.equals(resource.getQualifier()) || Resource.QUALIFIER_PACKAGE.equals(resource.getQualifier()));
+  }
+
+  public boolean isProj(final Resource resource) {
+    return (Resource.QUALIFIER_MODULE.equals(resource.getQualifier()) || Resource.QUALIFIER_PROJECT.equals(resource.getQualifier())
+        || Resource.QUALIFIER_SUBVIEW.equals(resource.getQualifier()) || Resource.QUALIFIER_VIEW.equals(resource.getQualifier()));
+  }
+
 }

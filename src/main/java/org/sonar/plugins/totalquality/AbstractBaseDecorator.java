@@ -31,32 +31,27 @@ public abstract class AbstractBaseDecorator extends AbstractDecorator {
   abstract void decorateProj(Resource resource, DecoratorContext context);
 
   public void decorate(Resource resource, DecoratorContext context) {
-    if (isFile(resource, context)) {
+    if (shouldDecorateFile(resource, context)) {
       decorateFile(resource, context);
-    } else if (isDir(resource, context)) {
+    } else if (shouldDecorateDir(resource, context)) {
       decorateDir(resource, context);
-    } else if (isProj(resource, context)) {
+    } else if (shouldDecorateProj(resource, context)) {
       decorateProj(resource, context);
     } else {
       // not hear please!
     }
   }
 
-  public boolean isFile(final Resource resource, final DecoratorContext context) {
-    return shouldSaveMeasure(resource)
-        && (Resource.QUALIFIER_FILE.equals(resource.getQualifier()) || Resource.QUALIFIER_CLASS.equals(resource.getQualifier()));
+  public boolean shouldDecorateFile(final Resource resource, final DecoratorContext context) {
+    return shouldSaveMeasure(resource) && isFile(resource);
   }
 
-  public boolean isDir(final Resource resource, final DecoratorContext context) {
-    return shouldSaveMeasure(resource) && hasCode(context)
-        && (Resource.QUALIFIER_DIRECTORY.equals(resource.getQualifier()) || Resource.QUALIFIER_PACKAGE.equals(resource.getQualifier()));
+  public boolean shouldDecorateDir(final Resource resource, final DecoratorContext context) {
+    return shouldSaveMeasure(resource) && hasCode(context) && isDir(resource);
   }
 
-  public boolean isProj(final Resource resource, final DecoratorContext context) {
-    return shouldSaveMeasure(resource)
-        && hasCode(context)
-        && (Resource.QUALIFIER_MODULE.equals(resource.getQualifier()) || Resource.QUALIFIER_PROJECT.equals(resource.getQualifier())
-            || Resource.QUALIFIER_SUBVIEW.equals(resource.getQualifier()) || Resource.QUALIFIER_VIEW.equals(resource.getQualifier()));
+  public boolean shouldDecorateProj(final Resource resource, final DecoratorContext context) {
+    return shouldSaveMeasure(resource) && hasCode(context) && isProj(resource);
   }
 
 }

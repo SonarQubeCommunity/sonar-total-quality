@@ -52,7 +52,11 @@ public final class DrynessDecorator extends AbstractDecorator {
 
       context.saveMeasure(TQMetrics.TQ_DRY, dry);
     }
-
   }
 
+  @Override
+  public boolean shouldSaveMeasure(Resource resource) {
+    return super.shouldSaveMeasure(resource) && isProj(resource);
+  }
+  
 }

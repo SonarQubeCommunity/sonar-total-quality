@@ -27,6 +27,7 @@ import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
+import org.sonar.api.resources.Resource;
 
 public class CodeDecorator extends AbstractFormulaBasedDecorator {
 
@@ -44,5 +45,10 @@ public class CodeDecorator extends AbstractFormulaBasedDecorator {
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
     return Arrays.asList(TQMetrics.TQ_DRY, CoreMetrics.PUBLIC_DOCUMENTED_API_DENSITY, CoreMetrics.VIOLATIONS_DENSITY);
+  }
+  
+  @Override
+  public boolean shouldSaveMeasure(Resource resource) {
+    return super.shouldSaveMeasure(resource) && isProj(resource);
   }
 }

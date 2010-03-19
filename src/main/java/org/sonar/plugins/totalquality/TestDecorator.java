@@ -27,6 +27,7 @@ import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
+import org.sonar.api.resources.Resource;
 
 public class TestDecorator extends AbstractFormulaBasedDecorator {
 
@@ -46,4 +47,8 @@ public class TestDecorator extends AbstractFormulaBasedDecorator {
     return Arrays.asList(CoreMetrics.NCLOC, CoreMetrics.COVERAGE, CoreMetrics.TEST_SUCCESS_DENSITY);
   }
 
+  @Override
+  public boolean shouldSaveMeasure(Resource resource) {
+    return super.shouldSaveMeasure(resource) && isProj(resource);
+  }
 }

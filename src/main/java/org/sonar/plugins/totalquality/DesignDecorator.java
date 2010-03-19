@@ -26,6 +26,7 @@ import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.measures.Metric;
+import org.sonar.api.resources.Resource;
 
 public class DesignDecorator extends AbstractFormulaBasedDecorator {
 
@@ -46,4 +47,9 @@ public class DesignDecorator extends AbstractFormulaBasedDecorator {
         TQMetrics.TQ_DESIGN_RFC);
   }
 
+  @Override
+  public boolean shouldSaveMeasure(Resource resource) {
+    return super.shouldSaveMeasure(resource) && isProj(resource);
+  }
+  
 }

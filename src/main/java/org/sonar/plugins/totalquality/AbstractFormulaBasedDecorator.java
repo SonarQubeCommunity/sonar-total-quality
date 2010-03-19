@@ -32,7 +32,7 @@ public abstract class AbstractFormulaBasedDecorator extends AbstractDecorator {
   protected abstract String getLine(DecoratorContext context);
 
   public void decorate(Resource resource, DecoratorContext context) {
-    if (hasCode(context)) {
+    if (shouldSaveMeasure(resource) && hasCode(context)) {
       final String line = getLine(context);
 
       final Double value = solve(context, line);
