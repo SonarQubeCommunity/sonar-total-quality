@@ -39,7 +39,7 @@ public abstract class AbstractDecorator implements Decorator {
 
   /** Only for java projects. */
   public boolean shouldExecuteOnProject(Project project) {
-    return Java.INSTANCE.equals(project.getLanguage());
+    return true;
   }
 
   public boolean isFile(final Resource resource) {
