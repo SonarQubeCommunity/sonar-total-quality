@@ -10,7 +10,7 @@
 
   <artifactId>sonar-total-quality-plugin</artifactId>
   <name>Sonar Total Quality Plugin</name>
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <description>
     Provides an overall measure of the quality of the project, linking code quality, design, architecture, and unit testing.
   </description>
@@ -66,9 +66,9 @@
   </dependencies>
 
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/tags/sonar-total-quality-plugin-1.0.1</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/tags/sonar-total-quality-plugin-1.0.1</developerConnection>
-    <url>scm:svn:https://svn.codehaus.org/sonar-plugins/tags/sonar-total-quality-plugin-1.0.1</url>
+    <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/trunk/total-quality</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/trunk/total-quality</developerConnection>
+    <url>http://svn.sonar-plugins.codehaus.org</url>
   </scm>
   <issueManagement>
     <system>JIRA</system>
