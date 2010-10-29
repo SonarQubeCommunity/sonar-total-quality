@@ -20,6 +20,16 @@
   </description>
 
 	<inceptionYear>2010</inceptionYear>
+	<developers>
+		<developer>
+			<id>e72636</id>
+			<name>Martin</name>
+		</developer>
+		<developer>
+			<id>eescobar</id>
+			<name>Emilio Escobar Reyero</name>
+		</developer>
+	</developers>
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License (LGPL), v.3</name>
