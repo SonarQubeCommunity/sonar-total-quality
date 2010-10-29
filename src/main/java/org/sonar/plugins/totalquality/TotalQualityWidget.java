@@ -2,6 +2,7 @@
  * Sonar Total Quality Plugin, open source software quality management tool.
  * Copyright (C) 2010
  * mailto:e72636 AT gmail DTO com
+ * mailto:escoem AT gmail DTO com
  *
  * Sonar Total Quality Plugin is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
