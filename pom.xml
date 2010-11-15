@@ -81,7 +81,7 @@
 	</issueManagement>
 
 	<organization>
-		<name>Martin (e72636) &amp; Emilio Escobar Reyero (escoem)</name>
+		<name>Martin (e72636) and Emilio Escobar Reyero (escoem)</name>
 	</organization>
 	<build>
 		<plugins>
