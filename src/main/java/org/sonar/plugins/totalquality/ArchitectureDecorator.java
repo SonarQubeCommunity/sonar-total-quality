@@ -46,7 +46,7 @@ public class ArchitectureDecorator extends AbstractFormulaBasedDecorator {
   public List<Metric> dependsOnMetrics() {
     return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_PTI, TQMetrics.TQ_ARCHITECTURE_ADI);
   }
-  
+
   @Override
   public boolean shouldSaveMeasure(Resource resource) {
     return super.shouldSaveMeasure(resource) && isProj(resource);

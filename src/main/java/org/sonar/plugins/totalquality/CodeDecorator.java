@@ -47,7 +47,7 @@ public class CodeDecorator extends AbstractFormulaBasedDecorator {
   public List<Metric> dependsOnMetrics() {
     return Arrays.asList(TQMetrics.TQ_DRY, CoreMetrics.PUBLIC_DOCUMENTED_API_DENSITY, CoreMetrics.VIOLATIONS_DENSITY);
   }
-  
+
   @Override
   public boolean shouldSaveMeasure(Resource resource) {
     return super.shouldSaveMeasure(resource) && isProj(resource);

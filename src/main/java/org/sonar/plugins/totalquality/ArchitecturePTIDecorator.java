@@ -57,7 +57,7 @@ public class ArchitecturePTIDecorator extends AbstractBaseDecorator {
   private void doDecoration(Resource resource, DecoratorContext context, Metric metric) {
     final Measure measure = context.getMeasure(metric);
     final double pti = MeasureUtils.hasValue(measure) ? (100 - measure.getValue().doubleValue()) : 100D;
-    
+
     context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_PTI, ParsingUtils.scaleValue(pti, 2));
   }
 
@@ -67,4 +67,3 @@ public class ArchitecturePTIDecorator extends AbstractBaseDecorator {
   }
 
 }
-

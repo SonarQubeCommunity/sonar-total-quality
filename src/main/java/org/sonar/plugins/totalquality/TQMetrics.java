@@ -102,8 +102,8 @@ public final class TQMetrics implements Metrics {
 
   public static final Map<String, Metric> formulaParams = ImmutableMap.<String, Metric> builder().put("ARCH", TQ_ARCHITECTURE).put(
       "DESIGN", TQ_DESIGN).put("CODE", TQ_CODE).put("TESTS", TQ_TS).put("NOM", TQ_DESIGN_NOM).put("LCOM", TQ_DESIGN_LCOM4).put("RFC",
-      TQ_DESIGN_RFC).put("CBO", TQ_DESIGN_CBO).put("DIT", TQ_DESIGN_DIT).put("PTI", TQ_ARCHITECTURE_PTI).put("ADI",
-      TQ_ARCHITECTURE_ADI).put("COV", CoreMetrics.COVERAGE).put("SUC", CoreMetrics.TEST_SUCCESS_DENSITY).put("DOC",
-      CoreMetrics.PUBLIC_DOCUMENTED_API_DENSITY).put("RULES", CoreMetrics.VIOLATIONS_DENSITY).put("DRY", TQ_DRY).build();
+      TQ_DESIGN_RFC).put("CBO", TQ_DESIGN_CBO).put("DIT", TQ_DESIGN_DIT).put("PTI", TQ_ARCHITECTURE_PTI).put("ADI", TQ_ARCHITECTURE_ADI)
+      .put("COV", CoreMetrics.COVERAGE).put("SUC", CoreMetrics.TEST_SUCCESS_DENSITY).put("DOC", CoreMetrics.PUBLIC_DOCUMENTED_API_DENSITY)
+      .put("RULES", CoreMetrics.VIOLATIONS_DENSITY).put("DRY", TQ_DRY).build();
 
 }

@@ -52,5 +52,5 @@ public class TotalQualityDecorator extends AbstractFormulaBasedDecorator {
   public boolean shouldSaveMeasure(Resource resource) {
     return super.shouldSaveMeasure(resource) && isProj(resource);
   }
-  
+
 }

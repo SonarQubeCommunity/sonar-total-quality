@@ -59,5 +59,5 @@ public final class DrynessDecorator extends AbstractDecorator {
   public boolean shouldSaveMeasure(Resource resource) {
     return super.shouldSaveMeasure(resource) && isProj(resource);
   }
-  
+
 }
