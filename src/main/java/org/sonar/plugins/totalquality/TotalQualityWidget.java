@@ -1,6 +1,6 @@
 /*
  * Sonar Total Quality Plugin
- * Copyright (C) 2010 Martin (e72636) & Emilio Escobar Reyero (escoem)
+ * Copyright (C) 2010 Martin (e72636) and Emilio Escobar Reyero (escoem)
  * dev@sonar.codehaus.org
  *
  * This program is free software; you can redistribute it and/or
