@@ -83,21 +83,7 @@
 	<organization>
 		<name>Martin (e72636) and Emilio Escobar Reyero (escoem)</name>
 	</organization>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.sonar</groupId>
-				<artifactId>sonar-packaging-maven-plugin</artifactId>
-				<extensions>true</extensions>
-				<version>0.1</version>
-				<configuration>
-					<pluginKey>total-quality</pluginKey>
-					<pluginName>Total Quality</pluginName>
-					<pluginClass>${sonar.plugin.class}</pluginClass>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
 
 
 </project>
