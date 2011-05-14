@@ -34,7 +34,7 @@ import com.google.common.collect.ImmutableMap;
 public final class TQMetrics implements Metrics {
 
   /** Domain Architecture. */
-  public static String DOMAIN_ARCHITECTURE = "Architecture";
+  public static final String DOMAIN_ARCHITECTURE = "Architecture";
 
   public static final String TQ_TOTAL_QUALITY_KEY = "total-quality";
   public static final Metric TQ_TOTAL_QUALITY = new Metric(TQ_TOTAL_QUALITY_KEY, "Total Quality", "The total quality of a project",

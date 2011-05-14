@@ -38,8 +38,6 @@ public abstract class AbstractBaseDecorator extends AbstractDecorator {
       decorateDir(resource, context);
     } else if (shouldDecorateProj(resource, context)) {
       decorateProj(resource, context);
-    } else {
-      // not hear please!
     }
   }
 

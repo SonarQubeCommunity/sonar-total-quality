@@ -100,7 +100,7 @@ public class ArchitectureADIDecorator extends AbstractBaseDecorator {
   @Override
   void decorateProj(Resource resource, DecoratorContext context) {
     final Collection<Measure> measures = context.getChildrenMeasures(TQMetrics.TQ_ARCHITECTURE_ADI);
-    if (measures == null || measures.size() == 0) {
+    if (measures == null || measures.isEmpty()) {
       return;
     }
 
