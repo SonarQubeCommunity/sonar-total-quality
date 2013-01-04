@@ -30,7 +30,9 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Measure;
+import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.resources.Resource;
+import org.sonar.api.resources.Scopes;
 
 
 public class DrynessDecoratorTest {
@@ -44,8 +46,9 @@ public class DrynessDecoratorTest {
     when(ncl.getValue()).thenReturn(4500D);
     
     final Resource res = mock(Resource.class);
-    when(res.getQualifier()).thenReturn(Resource.QUALIFIER_MODULE);
-    
+    when(res.getQualifier()).thenReturn(Qualifiers.MODULE);
+    when(res.getScope()).thenReturn(Scopes.PROJECT);
+
     final DecoratorContextSupport context = spy(new DecoratorContextSupport());
     
     when(context.getMeasure(CoreMetrics.DUPLICATED_LINES_DENSITY)).thenReturn(dup);

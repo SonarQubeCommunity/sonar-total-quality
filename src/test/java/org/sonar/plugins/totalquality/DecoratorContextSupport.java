@@ -34,6 +34,7 @@ import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Resource;
 import org.sonar.api.rules.Violation;
+import org.sonar.api.violations.ViolationQuery;
 
 
 public class DecoratorContextSupport implements DecoratorContext {
@@ -110,5 +111,12 @@ public class DecoratorContextSupport implements DecoratorContext {
   public DecoratorContext saveViolation(Violation arg0) {
     return null;
   }
-  
+
+  public List<Violation> getViolations(ViolationQuery vq) {
+    return null;
+  }
+
+  public DecoratorContext saveViolation(Violation vltn, boolean bln) {
+    return null;
+  }
 }

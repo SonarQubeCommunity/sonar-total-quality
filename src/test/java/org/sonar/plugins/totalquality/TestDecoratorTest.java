@@ -17,7 +17,6 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-
 package org.sonar.plugins.totalquality;
 
 import static org.junit.Assert.assertNotNull;
@@ -28,9 +27,12 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.sonar.api.batch.DecoratorContext;
+import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Measure;
+import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.resources.Resource;
+import org.sonar.api.resources.Scopes;
 
 public class TestDecoratorTest {
 
@@ -38,12 +40,13 @@ public class TestDecoratorTest {
   public void testDecorator() {
     final double cov = 45D;
     final double suc = 80D;
-    
-    final double val = (0.80 * cov) + (0.20 * suc); 
-    
+
+    final double val = (0.80 * cov) + (0.20 * suc);
+
     final Resource res = mock(Resource.class);
-    when(res.getQualifier()).thenReturn(Resource.QUALIFIER_MODULE);
-    
+    when(res.getQualifier()).thenReturn(Qualifiers.MODULE);
+    when(res.getScope()).thenReturn(Scopes.PROJECT);
+
     final Measure ncl = mock(Measure.class);
     when(ncl.getValue()).thenReturn(4500D);
 
@@ -53,26 +56,24 @@ public class TestDecoratorTest {
     final Measure msuc = mock(Measure.class);
     when(msuc.getValue()).thenReturn(suc);
 
-    
+
     final DecoratorContextSupport context = spy(new DecoratorContextSupport());
     when(context.getMeasure(CoreMetrics.NCLOC)).thenReturn(ncl);
     when(context.getMeasure(CoreMetrics.TEST_SUCCESS_DENSITY)).thenReturn(msuc);
     when(context.getMeasure(CoreMetrics.COVERAGE)).thenReturn(mcov);
-    
-    
-    final TestDecorator decorator = new TestDecorator() {
+
+
+    final TestDecorator decorator = new TestDecorator(new Settings()) {
       @Override
       protected String getLine(DecoratorContext context) {
         return TQPlugin.TQ_TEST_FORMULA_DEFAULT;
       }
     };
-    
+
     decorator.decorate(res, context);
-    
+
     assertNotNull(context.getD());
     assertTrue(val == context.getD());
-    
+
   }
-  
-  
 }

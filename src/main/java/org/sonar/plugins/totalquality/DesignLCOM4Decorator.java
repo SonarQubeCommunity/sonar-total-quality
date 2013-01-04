@@ -26,12 +26,17 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
 public class DesignLCOM4Decorator extends AbstractDesignDecorator {
+  private Settings settings;
 
+  public DesignLCOM4Decorator(Settings settings) {
+    this.settings = settings;
+  }
   @DependedUpon
   @Override
   public List<Metric> generatesMetrics() {
@@ -45,10 +50,10 @@ public class DesignLCOM4Decorator extends AbstractDesignDecorator {
 
   @Override
   void decorateFile(Resource resource, DecoratorContext context) {
-    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
+    final int aceleration = settings.getInt(TQPlugin.TQ_ACE);
 
-    final double lcom = doFileDecoration(resource, context, CoreMetrics.LCOM4, aceleration, context.getProject().getConfiguration()
-        .getDouble(TQPlugin.TQ_DESIGN_LCOM, Double.parseDouble(TQPlugin.TQ_DESIGN_LCOM_DEFAULT)));
+    final double lcom = doFileDecoration(resource, context, CoreMetrics.LCOM4, 
+            aceleration, Double.parseDouble(settings.getString(TQPlugin.TQ_DESIGN_LCOM)));
 
     context.saveMeasure(TQMetrics.TQ_DESIGN_LCOM4, lcom);
   }

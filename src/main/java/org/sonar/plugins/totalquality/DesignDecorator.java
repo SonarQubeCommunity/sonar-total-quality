@@ -17,7 +17,6 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-
 package org.sonar.plugins.totalquality;
 
 import java.util.Arrays;
@@ -26,14 +25,21 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.config.Settings;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
 public class DesignDecorator extends AbstractFormulaBasedDecorator {
 
+  private Settings settings;
+
+  public DesignDecorator(Settings settings) {
+    this.settings = settings;
+  }
+
   @Override
   protected String getLine(DecoratorContext context) {
-    return context.getProject().getConfiguration().getString(TQPlugin.TQ_DESIGN_FORMULA, TQPlugin.TQ_DESIGN_FORMULA_DEFAULT);
+    return settings.getString(TQPlugin.TQ_DESIGN_FORMULA);
   }
 
   @DependedUpon
@@ -45,12 +51,11 @@ public class DesignDecorator extends AbstractFormulaBasedDecorator {
   @DependsUpon
   public List<Metric> dependsOnMetrics() {
     return Arrays.asList(TQMetrics.TQ_DESIGN_CBO, TQMetrics.TQ_DESIGN_DIT, TQMetrics.TQ_DESIGN_LCOM4, TQMetrics.TQ_DESIGN_NOM,
-        TQMetrics.TQ_DESIGN_RFC);
+            TQMetrics.TQ_DESIGN_RFC);
   }
 
   @Override
   public boolean shouldSaveMeasure(Resource resource) {
     return super.shouldSaveMeasure(resource) && isProj(resource);
   }
-
 }

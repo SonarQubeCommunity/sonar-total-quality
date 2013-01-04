@@ -25,6 +25,7 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.measures.Measure;
 import org.sonar.api.measures.Metric;
+import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.resources.Resource;
 import org.sonar.api.utils.ParsingUtils;
 
@@ -64,7 +65,7 @@ public abstract class AbstractDesignDecorator extends AbstractBaseDecorator {
 
         for (DecoratorContext dc : children) {
           final Resource c = dc.getResource();
-          if ( !c.getQualifier().equals(Resource.QUALIFIER_UNIT_TEST_CLASS)) {
+          if ( !c.getQualifier().equals(Qualifiers.UNIT_TEST_FILE)) {
             final Measure measure = dc.getMeasure(metric);
 
             if (measure != null && measure.getValue() != null) {

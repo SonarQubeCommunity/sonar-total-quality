@@ -26,14 +26,21 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.config.Settings;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
 public class ArchitectureDecorator extends AbstractFormulaBasedDecorator {
+  
+  private Settings settings;
+  
+  public ArchitectureDecorator(Settings settings){
+    this.settings= settings;
+  }
 
   @Override
   protected String getLine(DecoratorContext context) {
-    return context.getProject().getConfiguration().getString(TQPlugin.TQ_ARCH_FORMULA, TQPlugin.TQ_ARCH_FORMULA_DEFAULT);
+    return settings.getString(TQPlugin.TQ_ARCH_FORMULA);
   }
 
   @DependedUpon

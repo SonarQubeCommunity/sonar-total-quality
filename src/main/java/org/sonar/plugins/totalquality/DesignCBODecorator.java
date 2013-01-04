@@ -26,12 +26,19 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
 public class DesignCBODecorator extends AbstractDesignDecorator {
 
+  private Settings settings;
+  
+  public DesignCBODecorator ( Settings settings){
+    this.settings = settings;
+  }
+  
   @DependedUpon
   @Override
   public List<Metric> generatesMetrics() {
@@ -45,10 +52,12 @@ public class DesignCBODecorator extends AbstractDesignDecorator {
 
   @Override
   void decorateFile(Resource resource, DecoratorContext context) {
-    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
-
-    final double cbo = doFileDecoration(resource, context, CoreMetrics.EFFERENT_COUPLINGS, aceleration, context.getProject()
-        .getConfiguration().getDouble(TQPlugin.TQ_DESIGN_CBO, Double.parseDouble(TQPlugin.TQ_DESIGN_CBO_DEFAULT)));
+    
+    final int aceleration = settings.getInt(TQPlugin.TQ_ACE);
+    
+    final double cbo = doFileDecoration(resource, context, 
+            CoreMetrics.EFFERENT_COUPLINGS, aceleration, 
+            Double.parseDouble(settings.getString(TQPlugin.TQ_DESIGN_CBO)));
 
     context.saveMeasure(TQMetrics.TQ_DESIGN_CBO, cbo);
   }

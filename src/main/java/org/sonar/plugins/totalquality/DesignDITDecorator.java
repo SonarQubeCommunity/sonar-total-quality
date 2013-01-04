@@ -26,11 +26,17 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
 public class DesignDITDecorator extends AbstractDesignDecorator {
+  private Settings settings;
+  
+  public DesignDITDecorator ( Settings settings){
+    this.settings = settings;
+  }
 
   @DependedUpon
   @Override
@@ -45,10 +51,11 @@ public class DesignDITDecorator extends AbstractDesignDecorator {
 
   @Override
   void decorateFile(Resource resource, DecoratorContext context) {
-    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
-
-    final double dit = doFileDecoration(resource, context, CoreMetrics.DEPTH_IN_TREE, aceleration, context.getProject().getConfiguration()
-        .getDouble(TQPlugin.TQ_DESIGN_DIT, Double.parseDouble(TQPlugin.TQ_DESIGN_DIT_DEFAULT)));
+    
+    final int aceleration = settings.getInt(TQPlugin.TQ_ACE);
+    final double dit = doFileDecoration(resource, context, 
+            CoreMetrics.DEPTH_IN_TREE, aceleration,
+            Double.parseDouble(settings.getString(TQPlugin.TQ_DESIGN_DIT)));
 
     context.saveMeasure(TQMetrics.TQ_DESIGN_DIT, dit);
   }

@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.codehaus.sonar-plugins</groupId>
     <artifactId>parent</artifactId>
-    <version>13</version>
+    <version>15</version>
     <relativePath>../parent</relativePath>
   </parent>
 
   <artifactId>sonar-total-quality-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
 
   <name>Sonar Total Quality Plugin</name>
   <description>Provides an overall measure of the quality of the project, linking code quality, design, architecture, and unit testing.</description>
@@ -36,6 +36,12 @@
       <id>eescobar</id>
       <name>Emilio Escobar Reyero</name>
     </developer>
+    <developer>
+      <id>ppapapetrou</id>
+      <name>Patroklos P.Papapetrou</name>
+      <email>ppapapetrou76@gmail.com</email>
+      <url>http://gr.linkedin.com/in/ppapapetrou/</url>
+    </developer>
   </developers>
 
   <scm>
@@ -50,7 +56,7 @@
 
   <properties>
     <sonar.pluginClass>org.sonar.plugins.totalquality.TQPlugin</sonar.pluginClass>
-    <sonar.version>2.3</sonar.version>
+    <sonar.version>3.0</sonar.version>
     <sonar.pluginKey>totalquality</sonar.pluginKey>
     <sonar.pluginName>Total Quality</sonar.pluginName>
   </properties>

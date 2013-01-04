@@ -27,6 +27,7 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Measure;
 import org.sonar.api.measures.MeasureUtils;
@@ -36,6 +37,8 @@ import org.sonar.api.utils.ParsingUtils;
 
 public class ArchitectureADIDecorator extends AbstractBaseDecorator {
 
+  private Settings settings;
+  
   @DependedUpon
   public List<Metric> generatesMetrics() {
     return Arrays.asList(TQMetrics.TQ_ARCHITECTURE_ADI);
@@ -46,6 +49,11 @@ public class ArchitectureADIDecorator extends AbstractBaseDecorator {
     return Arrays.asList(CoreMetrics.DISTANCE, CoreMetrics.NCLOC);
   }
 
+  
+  public ArchitectureADIDecorator(Settings settings){
+    this.settings= settings;
+  }
+  
   @Override
   public void decorate(Resource resource, DecoratorContext context) {
     // TODO no metric (DISTANCE) available
@@ -54,9 +62,9 @@ public class ArchitectureADIDecorator extends AbstractBaseDecorator {
 
   @Override
   void decorateDir(Resource resource, DecoratorContext context) {
-    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
-    final double cota = context.getProject().getConfiguration().getDouble(TQPlugin.TQ_ARCHITECTURE_ADI,
-        Double.parseDouble(TQPlugin.TQ_ARCHITECTURE_ADI_DEFAULT));
+    
+    final int aceleration = settings.getInt(TQPlugin.TQ_ACE);
+    final double cota = Double.parseDouble(settings.getString(TQPlugin.TQ_ARCHITECTURE_ADI));
     final double top = aceleration <= 1 ? cota : aceleration * cota;
 
     final Measure measure = context.getMeasure(CoreMetrics.DISTANCE);
@@ -78,22 +86,6 @@ public class ArchitectureADIDecorator extends AbstractBaseDecorator {
 
   @Override
   void decorateFile(Resource resource, DecoratorContext context) {
-    /*
-     * final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
-     * final double cota = context.getProject().getConfiguration().getDouble(TQPlugin.TQ_ARCHITECTURE_ADI,
-     * Double.parseDouble(TQPlugin.TQ_ARCHITECTURE_ADI_DEFAULT)); final double top = aceleration <= 1 ? cota : aceleration * cota;
-     * 
-     * final Measure measure = context.getMeasure(CoreMetrics.DISTANCE);
-     * 
-     * final double distance = measure == null || measure.getValue() == null ? 0 : measure.getValue();
-     * 
-     * final double res;// = distance > cota ? 0 : 1;
-     * 
-     * if (distance <= cota) { res = 1; } else if (distance > top) { res = 0; } else { res = 1 - ((distance - cota) / (top - cota)); }
-     * 
-     * 
-     * context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(res * 100, 2));
-     */
     context.saveMeasure(TQMetrics.TQ_ARCHITECTURE_ADI, ParsingUtils.scaleValue(100, 2));
   }
 

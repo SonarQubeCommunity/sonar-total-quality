@@ -26,12 +26,18 @@ import java.util.List;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.batch.DependedUpon;
 import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
 
 public class DesignRFCDecorator extends AbstractDesignDecorator {
+  private Settings settings;
 
+  public DesignRFCDecorator(Settings settings) {
+    this.settings = settings;
+  }
+  
   @DependedUpon
   @Override
   public List<Metric> generatesMetrics() {
@@ -45,10 +51,11 @@ public class DesignRFCDecorator extends AbstractDesignDecorator {
 
   @Override
   void decorateFile(Resource resource, DecoratorContext context) {
-    final int aceleration = context.getProject().getConfiguration().getInt(TQPlugin.TQ_ACE, Integer.parseInt(TQPlugin.TQ_ACE_DEFAULT));
+    final int aceleration = settings.getInt(TQPlugin.TQ_ACE);
 
-    final double rfc = doFileDecoration(resource, context, CoreMetrics.RFC, aceleration, context.getProject().getConfiguration().getDouble(
-        TQPlugin.TQ_DESIGN_RFC, Double.parseDouble(TQPlugin.TQ_DESIGN_RFC_DEFAULT)));
+    final double rfc = doFileDecoration(resource, context, 
+            CoreMetrics.RFC, aceleration, 
+            Double.parseDouble(settings.getString(TQPlugin.TQ_DESIGN_RFC)));
 
     context.saveMeasure(TQMetrics.TQ_DESIGN_RFC, rfc);
   }

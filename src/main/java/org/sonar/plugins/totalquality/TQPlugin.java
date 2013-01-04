@@ -20,13 +20,12 @@
 
 package org.sonar.plugins.totalquality;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import org.sonar.api.Extension;
-import org.sonar.api.Plugin;
 import org.sonar.api.Properties;
 import org.sonar.api.Property;
+import org.sonar.api.SonarPlugin;
 
 /** Total quality plugin definition. */
 @Properties( {
@@ -43,7 +42,7 @@ import org.sonar.api.Property;
     @Property(key = TQPlugin.TQ_TEST_FORMULA, defaultValue = TQPlugin.TQ_TEST_FORMULA_DEFAULT, name = "Default Test Formula.", description = ""),
     @Property(key = TQPlugin.TQ_CODE_FORMULA, defaultValue = TQPlugin.TQ_CODE_FORMULA_DEFAULT, name = "Default Code Formula.", description = ""),
     @Property(key = TQPlugin.TQ_TQ_FORMULA, defaultValue = TQPlugin.TQ_TQ_FORMULA_DEFAULT, name = "Default Total Quality Formula.", description = "") })
-public class TQPlugin implements Plugin {
+public class TQPlugin extends SonarPlugin {
 
   public static final String TQ_DESIGN_NOM_FUNCTION_COMPLEXITY = "tq.design.nom.function.complexity";
   public static final String TQ_DESIGN_NOM_FUNCTION_COMPLEXITY_DEFAULT = "2.5";
@@ -73,43 +72,28 @@ public class TQPlugin implements Plugin {
   public static final String TQ_CODE_FORMULA = "tq.code.formula";
   public static final String TQ_CODE_FORMULA_DEFAULT = "DOC=0.15 RULES=0.45 DRY=0.40";
 
-  public String getDescription() {
-    return "Total Quality";
-  }
-
-  public List<Class<? extends Extension>> getExtensions() {
-    List<Class<? extends Extension>> list = new ArrayList<Class<? extends Extension>>();
-
-    list.add(TQMetrics.class);
-    list.add(DrynessDecorator.class);
-    list.add(DesignCBODecorator.class);
-    list.add(DesignDITDecorator.class);
-    list.add(DesignLCOM4Decorator.class);
-    list.add(DesignNOMDecorator.class);
-    list.add(DesignRFCDecorator.class);
-    list.add(ArchitectureDecorator.class);
-    list.add(CodeDecorator.class);
-    list.add(DesignDecorator.class);
-    list.add(TestDecorator.class);
-    list.add(TotalQualityDecorator.class);
-    list.add(ArchitectureADIDecorator.class);
-    list.add(ArchitecturePTIDecorator.class);
-    list.add(TotalQualityWidget.class);
-
-    return list;
-  }
-
-  public String getKey() {
-    return "total-quality";
-  }
-
-  public String getName() {
-    return "Total Quality";
+  public List getExtensions() {
+    return Arrays.asList(TQMetrics.class,
+            DrynessDecorator.class,
+            DesignCBODecorator.class, 
+            DesignDITDecorator.class,
+            DesignLCOM4Decorator.class,
+            DesignNOMDecorator.class,
+            DesignRFCDecorator.class,
+            ArchitectureDecorator.class,
+            CodeDecorator.class,
+            DesignDecorator.class,
+            TestDecorator.class,
+            TotalQualityDecorator.class,
+            ArchitectureADIDecorator.class,
+            ArchitecturePTIDecorator.class,
+            TotalQualityWidget.class
+            );
   }
 
   @Override
   public String toString() {
-    return getKey();
+    return "Total Quality Plugin";
   }
 
 }

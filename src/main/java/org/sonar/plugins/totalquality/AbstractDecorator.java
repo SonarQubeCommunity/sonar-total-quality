@@ -24,7 +24,9 @@ import org.sonar.api.batch.Decorator;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.resources.Project;
+import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.resources.Resource;
+import org.sonar.api.resources.Scopes;
 
 public abstract class AbstractDecorator implements Decorator {
 
@@ -34,7 +36,7 @@ public abstract class AbstractDecorator implements Decorator {
   }
 
   public boolean shouldSaveMeasure(final Resource resource) {
-    return !Resource.QUALIFIER_UNIT_TEST_CLASS.equals(resource.getQualifier());
+    return !Qualifiers.UNIT_TEST_FILE.equals(resource.getQualifier());
   }
 
   /** Only for java projects. */
@@ -43,16 +45,16 @@ public abstract class AbstractDecorator implements Decorator {
   }
 
   public boolean isFile(final Resource resource) {
-    return (Resource.QUALIFIER_FILE.equals(resource.getQualifier()) || Resource.QUALIFIER_CLASS.equals(resource.getQualifier()));
+    return Scopes.isFile(resource);
   }
 
   public boolean isDir(final Resource resource) {
-    return (Resource.QUALIFIER_DIRECTORY.equals(resource.getQualifier()) || Resource.QUALIFIER_PACKAGE.equals(resource.getQualifier()));
+    return Scopes.isDirectory(resource);
   }
 
   public boolean isProj(final Resource resource) {
-    return (Resource.QUALIFIER_MODULE.equals(resource.getQualifier()) || Resource.QUALIFIER_PROJECT.equals(resource.getQualifier())
-        || Resource.QUALIFIER_SUBVIEW.equals(resource.getQualifier()) || Resource.QUALIFIER_VIEW.equals(resource.getQualifier()));
+    return Scopes.isProject(resource);
+    
   }
 
 }
