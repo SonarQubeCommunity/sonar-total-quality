@@ -40,6 +40,7 @@ import org.sonar.api.SonarPlugin;
     @Property(key = TQPlugin.TQ_DESIGN_FORMULA, defaultValue = TQPlugin.TQ_DESIGN_FORMULA_DEFAULT, name = "Default Design Formula.", description = ""),
     @Property(key = TQPlugin.TQ_ARCH_FORMULA, defaultValue = TQPlugin.TQ_ARCH_FORMULA_DEFAULT, name = "Default Architecture Formula.", description = ""),
     @Property(key = TQPlugin.TQ_TEST_FORMULA, defaultValue = TQPlugin.TQ_TEST_FORMULA_DEFAULT, name = "Default Test Formula.", description = ""),
+    @Property(key = TQPlugin.TQ_OVERALL_TEST_FORMULA, defaultValue = TQPlugin.TQ_OVERALL_TEST_FORMULA_DEFAULT, name = "Default Overall Test Formula.", description = ""),
     @Property(key = TQPlugin.TQ_CODE_FORMULA, defaultValue = TQPlugin.TQ_CODE_FORMULA_DEFAULT, name = "Default Code Formula.", description = ""),
     @Property(key = TQPlugin.TQ_TQ_FORMULA, defaultValue = TQPlugin.TQ_TQ_FORMULA_DEFAULT, name = "Default Total Quality Formula.", description = "") })
 public class TQPlugin extends SonarPlugin {
@@ -61,7 +62,7 @@ public class TQPlugin extends SonarPlugin {
   public static final String TQ_ACE = "tq.acel";
   public static final String TQ_ACE_DEFAULT = "2";
   public static final String TQ_TQ_FORMULA = "tq.tq.formula";
-  public static final String TQ_TQ_FORMULA_DEFAULT = "ARCH=0.25 DESIGN=0.25 CODE=0.25 TESTS=0.25";
+  public static final String TQ_TQ_FORMULA_DEFAULT = "ARCH=0.25 DESIGN=0.25 CODE=0.25 OVERALL_TESTS=0.25";
   public static final String TQ_DESIGN_FORMULA = "tq.design.formula";
   public static final String TQ_DESIGN_FORMULA_DEFAULT = "NOM=0.15 LCOM=0.15 RFC=0.25 CBO=0.25 DIT=0.20";
   public static final String TQ_ARCH_FORMULA = "tq.architecture.formula";
@@ -69,9 +70,10 @@ public class TQPlugin extends SonarPlugin {
   public static final String TQ_ARCH_FORMULA_DEFAULT = "PTI=1.00 ADI=0.00";
   public static final String TQ_TEST_FORMULA = "tq.test.formula";
   public static final String TQ_TEST_FORMULA_DEFAULT = "COV=0.80 SUC=0.20";
+  public static final String TQ_OVERALL_TEST_FORMULA = "tq.overall_test.formula";
+  public static final String TQ_OVERALL_TEST_FORMULA_DEFAULT = "IT_COV=0.40 TESTS=0.60";
   public static final String TQ_CODE_FORMULA = "tq.code.formula";
   public static final String TQ_CODE_FORMULA_DEFAULT = "DOC=0.15 RULES=0.45 DRY=0.40";
-
   public List getExtensions() {
     return Arrays.asList(TQMetrics.class,
             DrynessDecorator.class,
@@ -84,6 +86,7 @@ public class TQPlugin extends SonarPlugin {
             CodeDecorator.class,
             DesignDecorator.class,
             TestDecorator.class,
+            OverallTestDecorator.class,
             TotalQualityDecorator.class,
             ArchitectureADIDecorator.class,
             ArchitecturePTIDecorator.class,

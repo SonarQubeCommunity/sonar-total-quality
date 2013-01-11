@@ -55,6 +55,8 @@ public abstract class AbstractFormulaBasedDecorator extends AbstractDecorator {
       if (MeasureUtils.hasValue(measure)) {
         final double value = measure.getValue().doubleValue() * mod.doubleValue();
         sum = sum + value;
+      } else {
+        sum = sum + mod.doubleValue() * 100;
       }
     }
 

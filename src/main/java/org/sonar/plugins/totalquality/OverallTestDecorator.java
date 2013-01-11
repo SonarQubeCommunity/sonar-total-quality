@@ -20,38 +20,42 @@
 
 package org.sonar.plugins.totalquality;
 
-import org.sonar.api.batch.Decorator;
+import java.util.Arrays;
+import java.util.List;
+
 import org.sonar.api.batch.DecoratorContext;
+import org.sonar.api.batch.DependedUpon;
+import org.sonar.api.batch.DependsUpon;
+import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
-import org.sonar.api.resources.Project;
-import org.sonar.api.resources.Qualifiers;
+import org.sonar.api.measures.Metric;
 import org.sonar.api.resources.Resource;
-import org.sonar.api.resources.Scopes;
 
-public abstract class AbstractDecorator implements Decorator {
-
-  public boolean hasCode(final DecoratorContext context) {
-    return context.getMeasure(CoreMetrics.NCLOC) != null && context.getMeasure(CoreMetrics.NCLOC).getValue() != null
-        && context.getMeasure(CoreMetrics.NCLOC).getValue().doubleValue() > 0;
+public class OverallTestDecorator extends AbstractFormulaBasedDecorator {
+  private Settings settings;
+  
+  public OverallTestDecorator ( Settings settings){
+    this.settings = settings;
+  }
+  
+  @Override
+  protected String getLine(DecoratorContext context) {
+    return settings.getString(TQPlugin.TQ_OVERALL_TEST_FORMULA);
   }
 
-  public boolean shouldSaveMeasure(final Resource resource) {
-    return !Qualifiers.UNIT_TEST_FILE.equals(resource.getQualifier());
+  @DependedUpon
+  @Override
+  public Metric generatesMetric() {
+    return TQMetrics.TQ_OVERALL_TS;
   }
 
-  public boolean shouldExecuteOnProject(Project project) {
-    return true;
+  @DependsUpon
+  public List<Metric> dependsOnMetrics() {
+    return Arrays.asList(CoreMetrics.NCLOC, TQMetrics.TQ_TS, CoreMetrics.IT_COVERAGE);
   }
 
-  public boolean isFile(final Resource resource) {
-    return Scopes.isFile(resource);
-  }
-
-  public boolean isDir(final Resource resource) {
-    return Scopes.isDirectory(resource);
-  }
-
-  public boolean isProj(final Resource resource) {
-    return Scopes.isProject(resource);
+  @Override
+  public boolean shouldSaveMeasure(Resource resource) {
+    return super.shouldSaveMeasure(resource) && isProj(resource);
   }
 }
