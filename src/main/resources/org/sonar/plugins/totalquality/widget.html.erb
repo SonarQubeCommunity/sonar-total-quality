@@ -1,22 +1,26 @@
-            <% if measure('total-quality') %>
-            <div class="yui-g">
-              <div class="yui-u first">
-                <div class="dashbox">
-                  <p class="title">Total Quality</p>
-                  <p><span class="big"><%= format_measure('total-quality', :suffix => '', :url => url_for_drilldown('total-quality'), :default => '0')%><%= tendency_icon('total-quality') %></span></p> 
-                </div>
-              </div>
-              <div class="yui-u">
-                <div class="dashbox">
-                    <p class="title">&nbsp;</p>
-                    <p><span><%= format_measure('total-quality-architecture', :suffix => ' Architecture', :url => url_for_drilldown('total-quality-architecture'), :default => '$ 0')%><%= tendency_icon('total-quality-architecture') %></span></p>
-                    <p><span><%= format_measure('total-quality-design', :suffix => ' Design', :url => url_for_drilldown('total-quality-design'), :default => '$ 0')%><%= tendency_icon('total-quality-design') %></span></p>
-                    <p><span><%= format_measure('total-quality-test-with-it', :suffix => ' Test', :url => url_for_drilldown('total-quality-test'), :default => '$ 0')%><%= tendency_icon('total-quality-test') %></span></p>
-                    <p><span><%= format_measure('total-quality-code', :suffix => ' Code', :url => url_for_drilldown('total-quality-code'), :default => '$ 0')%><%= tendency_icon('total-quality-code') %></span></p>
-                </div>
-              </div>
-            </div>
-            <% end %>
+<% if measure('total-quality') %>
+<div class="yui-g">
+  <div class="yui-u first">
+    <div class="dashbox">
+      <p class="title">Total Quality</p>
+      <p><span class="big"><%= format_measure('total-quality', :suffix => '', :url => url_for_drilldown('total-quality'), :default => '0')%><%= tendency_icon('total-quality') %></span></p> 
+    </div>
+  </div>
+  <div class="yui-u">
+    <div class="dashbox">
+        <p class="title">&nbsp;</p>
+        <p><span><%= format_measure('total-quality-architecture', :suffix => ' Architecture', :url => url_for_drilldown('total-quality-architecture'), :default => '$ 0')%><%= tendency_icon('total-quality-architecture') %></span></p>
+        <p><span><%= format_measure('total-quality-design', :suffix => ' Design', :url => url_for_drilldown('total-quality-design'), :default => '$ 0')%><%= tendency_icon('total-quality-design') %></span></p>
+        <% if measure('total-quality-test-with-it') %>
+            <p><span><%= format_measure('total-quality-test-with-it', :suffix => ' Test', :url => url_for_drilldown('total-quality-test-with-it'), :default => '$ 0')%><%= tendency_icon('total-quality-test-with-it') %> (Including IT Tests)</span></p>
+         <% else %>
+            <p><span><%= format_measure('total-quality-test', :suffix => ' Test', :url => url_for_drilldown('total-quality-test'), :default => '$ 0')%><%= tendency_icon('total-quality-test') %></span></p>
+        <% end %>
+        <p><span><%= format_measure('total-quality-code', :suffix => ' Code', :url => url_for_drilldown('total-quality-code'), :default => '$ 0')%><%= tendency_icon('total-quality-code') %></span></p>
+    </div>
+  </div>
+</div>
+<% end %>
 
 
 

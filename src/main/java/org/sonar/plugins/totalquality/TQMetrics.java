@@ -19,15 +19,13 @@
  */
 package org.sonar.plugins.totalquality;
 
+import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.measures.Metrics;
-
-import com.google.common.collect.ImmutableMap;
 
 /**
  * Metrics for TQ plugin.

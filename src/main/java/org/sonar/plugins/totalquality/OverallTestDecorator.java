@@ -17,7 +17,6 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-
 package org.sonar.plugins.totalquality;
 
 import java.util.Arrays;
@@ -29,15 +28,22 @@ import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
+import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Resource;
 
 public class OverallTestDecorator extends AbstractFormulaBasedDecorator {
+
   private Settings settings;
-  
-  public OverallTestDecorator ( Settings settings){
+
+  public OverallTestDecorator(Settings settings) {
     this.settings = settings;
   }
-  
+
+  @Override
+  public boolean shouldExecuteOnProject(Project project) {
+    return settings.getBoolean(TQPlugin.TQ_INCLUDE_IT_TESTS);
+  }
+
   @Override
   protected String getLine(DecoratorContext context) {
     return settings.getString(TQPlugin.TQ_OVERALL_TEST_FORMULA);

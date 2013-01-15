@@ -22,15 +22,12 @@ package org.sonar.plugins.totalquality;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-
 import org.junit.Test;
-import org.sonar.api.batch.DecoratorContext;
+import static org.mockito.Mockito.*;
 import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Measure;
+import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.resources.Resource;
 import org.sonar.api.resources.Scopes;
@@ -40,13 +37,14 @@ public class OveralTestlDecoratorTest {
   private final static double IT_COV = 30D;
   private final static double QT_TESTS = 52;
   private final static double VAL_IT = (0.40 * IT_COV) + (0.60 * QT_TESTS);
-  private final static double VAL_NOIT = 40 + (0.60 * QT_TESTS);
+  private final static double VAL_NOIT = (0.60 * QT_TESTS);
   private final Resource res = mock(Resource.class);
   private final Measure ncl = mock(Measure.class);
   private final Measure mitcov = mock(Measure.class);
   private final Measure mockQtTests = mock(Measure.class);
   private final DecoratorContextSupport context = spy(new DecoratorContextSupport());
-
+  private final Settings settings = new Settings();
+  private OverallTestDecorator overallTestDecorator;
   @Before
   public void setupMocks() {
     when(res.getQualifier()).thenReturn(Qualifiers.MODULE);
@@ -61,18 +59,17 @@ public class OveralTestlDecoratorTest {
     when(context.getMeasure(CoreMetrics.NCLOC)).thenReturn(ncl);
     when(context.getMeasure(TQMetrics.TQ_TS)).thenReturn(mockQtTests);
     when(context.getMeasure(CoreMetrics.IT_COVERAGE)).thenReturn(mitcov);
+    
+    settings.setProperty(TQPlugin.TQ_INCLUDE_IT_TESTS, Boolean.TRUE);
+    settings.setProperty(TQPlugin.TQ_OVERALL_TEST_FORMULA, TQPlugin.TQ_OVERALL_TEST_FORMULA_DEFAULT);
+    
+    overallTestDecorator = new OverallTestDecorator(settings);
   }
-  private final OverallTestDecorator decorator = new OverallTestDecorator(new Settings()) {
-    @Override
-    protected String getLine(DecoratorContext context) {
-      return TQPlugin.TQ_OVERALL_TEST_FORMULA_DEFAULT;
-    }
-  };
 
   @Test
   public void testDecoratorWithoutITCoverage() {
 
-    decorator.decorate(res, context);
+    overallTestDecorator.decorate(res, context);
 
     assertNotNull(context.getD());
     assertTrue(VAL_NOIT == context.getD());
@@ -83,10 +80,15 @@ public class OveralTestlDecoratorTest {
   public void testDecoratorWithITCoverage() {
     when(mitcov.getValue()).thenReturn(IT_COV);
 
-    decorator.decorate(res, context);
+    overallTestDecorator.decorate(res, context);
 
     assertNotNull(context.getD());
     assertTrue(VAL_IT == context.getD());
 
   }
+  
+   @Test
+  public void testShouldExecute() {
+    assertTrue(overallTestDecorator.shouldExecuteOnProject(new Project(null)));
+   }
 }

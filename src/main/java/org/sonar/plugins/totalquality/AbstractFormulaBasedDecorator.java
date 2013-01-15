@@ -17,7 +17,6 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-
 package org.sonar.plugins.totalquality;
 
 import org.sonar.api.batch.DecoratorContext;
@@ -55,12 +54,9 @@ public abstract class AbstractFormulaBasedDecorator extends AbstractDecorator {
       if (MeasureUtils.hasValue(measure)) {
         final double value = measure.getValue().doubleValue() * mod.doubleValue();
         sum = sum + value;
-      } else {
-        sum = sum + mod.doubleValue() * 100;
       }
     }
 
     return Double.valueOf(sum);
   }
-
 }
