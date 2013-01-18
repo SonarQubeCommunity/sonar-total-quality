@@ -46,7 +46,7 @@
 
   <scm>
     <connection>scm:git:git@github.com:SonarSource/sonar-total-quality.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarSource/sonar-total-quality.git</developerConnection>
+    <developerConnection>scm:git:https://github.com/SonarCommunity/sonar-total-quality.git</developerConnection>
     <url>https://github.com/SonarCommunity/sonar-total-quality</url>
     <tag>sonar-total-quality-plugin-1.1</tag>
   </scm>
