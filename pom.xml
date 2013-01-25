@@ -10,7 +10,7 @@
 
   <artifactId>sonar-total-quality-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
 
   <name>Sonar Total Quality Plugin</name>
   <description>Provides an overall measure of the quality of the project, linking code quality, design, architecture, and testing (Unit and Integration).</description>
